@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="86.0" prefWidth="266.0" style="-fx-background-color: #F3CF12;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="imat.ImatShoppingcart">
+   <children>
+      <ImageView fx:id="productShoppingCartImage" fitHeight="73.0" fitWidth="73.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../imat/images/product_22.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="productShoppingCartPrice" layoutX="224.0" layoutY="35.0" text="Pris kr" />
+      <Spinner editable="true" layoutX="120.0" layoutY="31.0" prefHeight="18.0" prefWidth="91.0" />
+   </children>
+</AnchorPane>

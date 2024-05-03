@@ -1,7 +1,8 @@
 
 package imat;
 
-import java.awt.event.ActionEvent;
+//import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -9,15 +10,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import se.chalmers.cse.dat216.project.CreditCard;
-import se.chalmers.cse.dat216.project.IMatDataHandler;
-import se.chalmers.cse.dat216.project.Product;
-import se.chalmers.cse.dat216.project.User;
+import se.chalmers.cse.dat216.project.*;
 
-public class MainViewController implements Initializable {
+public class MainViewController implements Initializable, ShoppingCartListener {
 
     Boolean UserLoggedInChecker;
 
@@ -30,36 +29,42 @@ public class MainViewController implements Initializable {
     @FXML
     AnchorPane accountPane;
 
+    @FXML
+    Label itemAmountLabel;
+
+    @FXML
+    Label totalCostLabel;
+
+
     IMatDataHandler iMatDataHandler = IMatDataHandler.getInstance();
 
+    private final Model model = Model.getInstance();
+
+    private ShoppingCart shoppingCart;
+
+
+
+
     public void initialize(URL url, ResourceBundle rb) {
+
+        model.getShoppingCart().addShoppingCartListener(this);
 
         String iMatDirectory = iMatDataHandler.imatDirectory();
 
         pathLabel.setText(iMatDirectory);
 
-    }
-
-//----------------------- search funktioner ------------------------------------------
-
-/*  Denna funktion är till för när du söker på en produkt. Den kommer hitta matchande produkt(er)
-    och uppdatera vilka produkter som visas i productsFlowPane.
- */
-    @FXML
-    private void handleSearchAction(ActionEvent event) {
-
-        List<Product> matches = Model.findProducts(searchTextField.getText());
-        updateProductList(matches);
-        System.out.println("# matching products: " + matches.size());
+        updateProductList(model.getProducts());
 
     }
 
-/*
-Denna funktion är till för att uppdatera vilka produkter som ligger i productsFlowPane.
- */
+
+
     private void updateProductList(List<Product> products) {
+        /*
+        Denna funktion är till för att uppdatera vilka produkter som ligger i productsFlowPane.
+        */
 
-        System.out.println("updateProductList " + products.size());
+        //System.out.println("updateProductList " + products.size());
         productsFlowPane.getChildren().clear();
 
         for (Product product : products) {
@@ -68,8 +73,20 @@ Denna funktion är till för att uppdatera vilka produkter som ligger i products
         }
     }
 
+//----------------------- search funktioner ------------------------------------------
 
-//------------------------------- översta rektangel knapp funktioner ---------------------------------------
+    @FXML
+    private void handleSearchAction(ActionEvent event) {
+        /*  Denna funktion är till för när du söker på en produkt. Den kommer hitta matchande produkt(er)
+        och uppdatera vilka produkter som visas i productsFlowPane.
+        */
+        List<Product> matches = Model.findProducts(searchTextField.getText());
+        updateProductList(matches);
+        System.out.println("# matching products: " + matches.size());
+    }
+
+
+//------------------------------- översta rektangel account funktioner ---------------------------------------
 
 
     @FXML
@@ -112,11 +129,13 @@ Denna funktion är till för att uppdatera vilka produkter som ligger i products
         */
     }
 
+
+    /*
     private boolean LoggedInChecker (){
         /*
         denna funktion kollar vilken account view som ska visas, logga in sidan
         eller användarens informtion sidan
-         */
+         *//*
         if (UserLoggedInChecker == null){
             NotLoggedIn();
         }
@@ -127,4 +146,37 @@ Denna funktion är till för att uppdatera vilka produkter som ligger i products
             LoggedIn();
         }
     }
+*/
+//---------------------------------- Översta rektangeln andra funktioner ----------------------------------
+
+
+
+
+//----------------------------------shopping cart funktioner -------------------------------------------------
+
+
+    @FXML
+    private void handleClearCartAction(ActionEvent event) {
+        model.clearShoppingCart();
+    }
+    public void shoppingCartChanged(CartEvent evt) {
+        updateSmallShoppingCartPanel();
+    }
+
+    private void updateSmallShoppingCartPanel() {
+        ShoppingCart shoppingCart = model.getShoppingCart();
+
+        itemAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
+        totalCostLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
+
+    }
+
+
+
+
+
+
+
+
+
 }
