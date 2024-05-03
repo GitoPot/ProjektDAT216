@@ -3,3 +3,14 @@
       -fx-font-family: "Arial";
       -fx-font-weight: bold;
   }
+
+.product-item{
+    -fx-border-radius: 5px;
+    -fx-border-color: #999999;
+    -fx-background-radius: 5px;
+}
+
+#imageLogo{
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}

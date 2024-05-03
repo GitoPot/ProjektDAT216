@@ -14,9 +14,8 @@ import javafx.stage.Stage;
  * and open the template in the editor.
  */
 
-//hannas branch test
+
 public class iMatApp extends Application {
-    //hej från hugo
     @Override
     public void start(Stage stage) throws Exception {
         
