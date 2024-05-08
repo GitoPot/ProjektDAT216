@@ -4,36 +4,83 @@ package imat;
 //import java.awt.event.ActionEvent;
 import javafx.event.ActionEvent;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 import se.chalmers.cse.dat216.project.*;
 
 public class MainViewController implements Initializable, ShoppingCartListener {
 
     Boolean UserLoggedInChecker;
 
+   // @FXML
+    //Label pathLabel; ( VAD ÄR DETTA?)
+
+
     @FXML
-    Label pathLabel;
+    AnchorPane startingPane;
+    @FXML
+    ImageView escapeHatchLogo;
+    @FXML
+    AnchorPane smallShoppingCart;
+
+    @FXML
+    Text shoppingCartAmount;
+    @FXML
+    Button shoppingCartButton;
     @FXML
     TextField searchTextField;
     @FXML
     FlowPane productsFlowPane;
     @FXML
     AnchorPane accountPane;
+    @FXML
+    AnchorPane dynamicPane;
 
+    @FXML
+    AnchorPane loginPane;
+
+    @FXML
+    Label   categoryLabel;
+
+    @FXML
+    FlowPane cartFlowPane;
     @FXML
     Label itemAmountLabel;
 
     @FXML
     Label totalCostLabel;
+
+    @FXML
+    TextField emailTextField;
+    @FXML
+    TextField lastNameTextField;
+
+    @FXML
+    TextField firstNameTextField;
+
+    @FXML
+    TextField adressLabel;
+    @FXML
+    TextField postcodeLabel;
+    @FXML
+    TextField phoneNumber;
+
+    @FXML
+    FlowPane categoryFlowPane;
+
 
 
     IMatDataHandler iMatDataHandler = IMatDataHandler.getInstance();
@@ -42,6 +89,10 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private ShoppingCart shoppingCart;
 
+    private Customer customer;
+
+
+
 
 
 
@@ -49,17 +100,28 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
         model.getShoppingCart().addShoppingCartListener(this);
 
-        String iMatDirectory = iMatDataHandler.imatDirectory();
+        //String iMatDirectory = iMatDataHandler.imatDirectory();
 
-        pathLabel.setText(iMatDirectory);
+        //pathLabel.setText(iMatDirectory);
 
         updateProductList(model.getProducts());
+        categoryList(model.getCategories());
+
+
+        // Load the NamePanel and add it to dynamicPane
+        // This shows how one can develop a view in a separate
+        // FXML-file and then load it into on of the panes in the main interface
+        // There is an fxml file NamePanel.fxml and a corresponding class NamePanel.java
+        // Simply create a new NamePanel object and add it as a child of dynamicPane
+        // The NamePanel holds a reference to the main controller (this class)
+        AnchorPane cartPane = new iMatCart(this);
+        dynamicPane.getChildren().add(cartPane);
 
     }
 
 
 
-    private void updateProductList(List<Product> products) {
+    public void updateProductList(List<Product> products) {
         /*
         Denna funktion är till för att uppdatera vilka produkter som ligger i productsFlowPane.
         */
@@ -72,6 +134,16 @@ public class MainViewController implements Initializable, ShoppingCartListener {
             productsFlowPane.getChildren().add(new IMatProduct(product));
         }
     }
+
+
+    @FXML
+    private void startShoppingButton(ActionEvent event){
+       // updateAccount();
+        loginPane.toBack();
+    }
+
+
+
 
 //----------------------- search funktioner ------------------------------------------
 
@@ -102,31 +174,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         /*
         denna funktion gör så att användar delen visas visas
         */
-        updateAccountPanel();
         accountPane.toFront();
-    }
-
-
-    private void updateAccountPanel() {
-        /*
-        denna funktion är till för att uppdatera användarens information, vi kommer inte vilja
-        använda alla dessa dela, vissa delar på andra ställen osv
-        */
-
-        /*
-        CreditCard card = model.getCreditCard();
-
-        numberTextField.setText(card.getCardNumber());
-        nameTextField.setText(card.getHoldersName());
-
-        cardTypeCombo.getSelectionModel().select(card.getCardType());
-        monthCombo.getSelectionModel().select(""+card.getValidMonth());
-        yearCombo.getSelectionModel().select(""+card.getValidYear());
-
-        cvcField.setText(""+card.getVerificationCode());
-
-        purchasesLabel.setText(model.getNumberOfOrders()+ " tidigare inköp hos iMat");
-        */
     }
 
 
@@ -149,6 +197,10 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 */
 //---------------------------------- Översta rektangeln andra funktioner ----------------------------------
 
+    @FXML
+    private void escapeHatchButton(ActionEvent event){
+        startingPane.toFront();
+    }
 
 
 
@@ -165,18 +217,47 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private void updateSmallShoppingCartPanel() {
         ShoppingCart shoppingCart = model.getShoppingCart();
+        shoppingCartAmount.setText("" + shoppingCart.getItems().size());
 
-        itemAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
-        totalCostLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
+       // itemAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
+       // totalCostLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
 
     }
 
+    @FXML
+    private void showSmallShoppingCartButton(ActionEvent event){
+        smallShoppingCart.toFront();
+    }
 
+    @FXML
+    private void goToCartButton(ActionEvent event){
+        dynamicPane.toFront();
+    }
 
+    //---------------------------Logga in ---------------------------------------------------------------------
 
+    private void updateAccount(){
+        if (customer != null) {
+            customer.setEmail(emailTextField.getText());
+            customer.setFirstName(firstNameTextField.getText());
+            customer.setLastName(lastNameTextField.getText());
+            customer.setAddress(adressLabel.getText());
+            customer.setPostCode(postcodeLabel.getText());
+            customer.setPhoneNumber(phoneNumber.getText());
+        }
+    }
 
+//-------------------------------Kategorier------------------------------------------------------
 
+    private void categoryList(List<ProductCategory> categories){
+        categoryFlowPane.getChildren().clear();
+        for (ProductCategory category : categories){
+            categoryFlowPane.getChildren().add(new iMatCategories(category));
 
+        }
+    }
 
+    // TODO
+    // fixa kategorier
 
 }

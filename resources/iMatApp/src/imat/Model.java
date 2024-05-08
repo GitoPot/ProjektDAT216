@@ -4,6 +4,8 @@ package imat;
 import javafx.scene.image.Image;
 import se.chalmers.cse.dat216.project.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Model {
@@ -57,5 +59,33 @@ public class Model {
         Model.getInstance().getShoppingCart().addItem(item);
 
         shoppingCart.addProduct(p);
+    }
+
+    public void addToShoppingCartAgain(Product p) {
+        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
+
+        ShoppingItem item = new ShoppingItem(p);
+        Model.getInstance().getShoppingCart().addItem(item, false);
+        item.setAmount(item.getAmount()+1);
+        System.out.println(item.getAmount());
+
+        //shoppingCart.addProduct(p);
+    }
+
+   public List<ProductCategory> getCategories(){
+        List<ProductCategory> categoriesList = new ArrayList<>();
+        categoriesList.addAll(Arrays.asList(ProductCategory.values()));
+        return categoriesList;
+   }
+
+
+
+    public void removeFromShoppingCartAgain(int index) {
+        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
+        shoppingCart.removeItem(index);
+    }
+
+    public ProductDetail getDetail(Product p) {
+        return iMatDataHandler.getDetail(p);
     }
 }
