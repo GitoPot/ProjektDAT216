@@ -252,8 +252,9 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     private void categoryList(List<ProductCategory> categories){
         categoryFlowPane.getChildren().clear();
         for (ProductCategory category : categories){
+            //System.out.println(category);
+            //categorys blir faktiskt alla kattegorier, en i taget. syns på printen.
             categoryFlowPane.getChildren().add(new iMatCategories(category));
-
         }
     }
 

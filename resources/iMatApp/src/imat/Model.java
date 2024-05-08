@@ -52,40 +52,46 @@ public class Model {
 
     }
 
+
+
+
+
     public void addToShoppingCart(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
 
         ShoppingItem item = new ShoppingItem(p);
         Model.getInstance().getShoppingCart().addItem(item);
-
-        shoppingCart.addProduct(p);
     }
 
     public void addToShoppingCartAgain(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-
-        ShoppingItem item = new ShoppingItem(p);
-        Model.getInstance().getShoppingCart().addItem(item, false);
-        item.setAmount(item.getAmount()+1);
-        System.out.println(item.getAmount());
-
-        //shoppingCart.addProduct(p);
+        ShoppingItem item= new ShoppingItem(p);
+        Model.getInstance().getShoppingCart().addItem(item,true);
     }
 
-   public List<ProductCategory> getCategories(){
-        List<ProductCategory> categoriesList = new ArrayList<>();
-        categoriesList.addAll(Arrays.asList(ProductCategory.values()));
-        return categoriesList;
-   }
 
+    public void removeFromShoppingCartAgain(Product p) {
+        /*ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
+        shoppingCart.removeItem(index);*/
 
+        //DENNA FUNKAR EJ
 
-    public void removeFromShoppingCartAgain(int index) {
-        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-        shoppingCart.removeItem(index);
+        iMatDataHandler.removeProduct(p);
     }
+
+
+
+
+
 
     public ProductDetail getDetail(Product p) {
         return iMatDataHandler.getDetail(p);
     }
+
+    public List<ProductCategory> getCategories(){
+        List<ProductCategory> categoriesList = new ArrayList<>();
+        categoriesList.addAll(Arrays.asList(ProductCategory.values()));
+        return categoriesList;
+    }
+
 }

@@ -18,7 +18,7 @@ public class iMatShoppingCart extends AnchorPane {
     @FXML
     private Label productShoppingCartPrice;
     @FXML
-    private TextField textFieldCartAmount;
+    TextField textFieldCartAmount;
     @FXML
     private ImageView productShoppingCartImage;
     @FXML

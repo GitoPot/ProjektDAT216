@@ -17,7 +17,7 @@
       <Label fx:id="productShoppingCartPrice" layoutX="909.0" layoutY="52.0" text="Pris kr" />
       <Button layoutX="752.0" layoutY="46.0" mnemonicParsing="false" text="+" />
       <Button layoutX="853.0" layoutY="45.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="25.0" text="-" />
-      <TextField fx:id="cartAmountTextField" layoutX="792.0" layoutY="46.0" prefHeight="26.0" prefWidth="45.0" text="1" />
+      <TextField fx:id="textFieldCartAmount" layoutX="792.0" layoutY="46.0" prefHeight="26.0" prefWidth="45.0" text="1" />
       <Label fx:id="shoppingCartNameLabel" layoutX="197.0" layoutY="50.0" text="Label" />
    </children>
 </fx:root>
