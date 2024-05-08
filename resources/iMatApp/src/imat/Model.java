@@ -4,6 +4,7 @@ package imat;
 import javafx.scene.image.Image;
 import se.chalmers.cse.dat216.project.*;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -91,6 +92,7 @@ public class Model {
     public List<ProductCategory> getCategories(){
         List<ProductCategory> categoriesList = new ArrayList<>();
         categoriesList.addAll(Arrays.asList(ProductCategory.values()));
+        //System.out.println("" + categoriesList.get(0).getDeclaringClass().getSimpleName()); //denna print visar att objekten i listan faktiskt är av typen ProductCategory
         return categoriesList;
     }
 

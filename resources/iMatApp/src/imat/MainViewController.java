@@ -250,15 +250,19 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 //-------------------------------Kategorier------------------------------------------------------
 
     private void categoryList(List<ProductCategory> categories){
+        /*denna funktionen är till för att uppdatera vilka kategorier som finns i listan över kategorier*/
         categoryFlowPane.getChildren().clear();
         for (ProductCategory category : categories){
             //System.out.println(category);
-            //categorys blir faktiskt alla kattegorier, en i taget. syns på printen.
+            //categorys blir faktiskt alla kategorier, en i taget. syns på printen.
             categoryFlowPane.getChildren().add(new iMatCategories(category));
+
+            //kanske att denna inte är vanligt objekt så därför inte kan ta in en av varje?
+
         }
     }
 
     // TODO
-    // fixa kategorier
+    // fixa kategorier, fixa att man kan ta bort en produkt från varukorg med minus, detaljer om produkter.
 
 }
