@@ -83,9 +83,15 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
     private void updateView() {
 
-        totalAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
-        totalPriceLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
-
+        //_----------------------DETTA ÄR COPY PASTE FRÅN MAIN VIEW CONTROLLER-----------
+         int cartAmountTemp = 0;
+                 for (int i=0;i<shoppingCart.getItems().size(); i++){
+                     cartAmountTemp += shoppingCart.getItems().get(i).getAmount();
+                 }
+         //------------------------------------------------------------------------------
+        
+         totalAmountLabel.setText("Antal varor: " + cartAmountTemp);  // VA FÖRUT totalAmountLabel.setText("Antal varor: " + shoppingCart.get...().size())
+         totalPriceLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
         //System.out.println("updateView");
 
 

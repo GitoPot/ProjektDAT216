@@ -61,16 +61,16 @@ public class Model {
 
     public void addToShoppingCart(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-
         ShoppingItem item = new ShoppingItem(p);
         Model.getInstance().getShoppingCart().addItem(item);
     }
 
     public void addToShoppingCartAgain(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-        ShoppingItem item= new ShoppingItem(p);
+        ShoppingItem item = new ShoppingItem(p);
         Model.getInstance().getShoppingCart().addItem(item,true);
     }
+
 
 
     public void removeFromShoppingCartAgain(Product p) {
@@ -79,7 +79,31 @@ public class Model {
 
         //DENNA FUNKAR EJ
 
-        iMatDataHandler.removeProduct(p);
+        //det går inte att ändra amount på
+        /*
+        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
+        ShoppingItem item = null;
+        for (int i=0; i<shoppingCart.getItems().size(); i++ ){
+            if (shoppingCart.getItems().get(i).equals(p)){
+                item = shoppingCart.getItems().get(i);
+            }
+            //else {
+            //    item  = null;
+            //}
+        }
+        System.out.println("" + item.getAmount());
+        if (item.getAmount() == 1.0){
+            shoppingCart.removeItem(item);
+        }
+        else {
+            System.out.println("jag hamnade här");
+            item.setAmount(item.getAmount() -1 );
+        }*/
+        /*
+        ShoppingItem item= new ShoppingItem(p);
+        double amount = item.getAmount();
+        item.setAmount(amount - 1);*/
+        System.out.println("" + iMatDataHandler.getShoppingCart().getItems());
     }
 
 

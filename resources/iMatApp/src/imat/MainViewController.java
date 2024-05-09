@@ -219,7 +219,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         ShoppingCart shoppingCart = model.getShoppingCart();
         int cartAmountTemp = 0;
         for (int i=0;i<shoppingCart.getItems().size(); i++){
-            cartAmountTemp += shoppingCart.getItems().get(i).getAmount();
+            cartAmountTemp += (int) shoppingCart.getItems().get(i).getAmount();
         }
         shoppingCartAmount.setText("" + cartAmountTemp);
 
@@ -270,6 +270,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     }
 
     // TODO
-    // fixa kategorier, fixa att man kan ta bort en produkt från varukorg med minus, detaljer om produkter.
+    // fixa kategorier, fixa att man kan ta bort en produkt från varukorg med minus.
 
 }
