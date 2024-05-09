@@ -44,7 +44,7 @@ public class iMatCategories extends AnchorPane {
 
     @FXML
     private void categorySearch(ActionEvent event){
-        List<Product> matches = Model.findProducts(categoryLabel.getText());
+        List<Product> matches = model.findProducts(categoryLabel.getText());
         mainViewController.updateProductList(matches);
     }
 

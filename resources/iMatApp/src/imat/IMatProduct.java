@@ -75,11 +75,20 @@ public class IMatProduct extends AnchorPane{
 
     }
 
+
+
+
+
+
+
+    //------------------- BORDE INTE DESSA VARA I ANTINGEN MAINVEIWCONTROLLER ELLER IMATCART?-------------------
+
     @FXML
     private void addToShoppingCart(ActionEvent event){
         model.addToShoppingCart(product);
         changeAmountPane.toFront();
         cardAmountTextField.setText(""+ amount);
+
     }
 
     @FXML
@@ -93,6 +102,8 @@ public class IMatProduct extends AnchorPane{
 
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event){
+        //TODO
+        // denna funkar ej
         if(amount != 0) {
             model.removeFromShoppingCartAgain(product);
             changeAmountPane.toFront();
@@ -102,4 +113,5 @@ public class IMatProduct extends AnchorPane{
             changeAmountPane.toBack();
         }
     }
+    //---------------------------------------------------------------------------------
 }

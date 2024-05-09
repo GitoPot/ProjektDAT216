@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <fx:root prefHeight="105.0" prefWidth="1000.0" style="-fx-background-color: #F3CF12;" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -15,9 +16,20 @@
          </image>
       </ImageView>
       <Label fx:id="productShoppingCartPrice" layoutX="909.0" layoutY="52.0" text="Pris kr" />
-      <Button layoutX="752.0" layoutY="46.0" mnemonicParsing="false" text="+" />
-      <Button layoutX="853.0" layoutY="45.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="25.0" text="-" />
-      <TextField fx:id="textFieldCartAmount" layoutX="792.0" layoutY="46.0" prefHeight="26.0" prefWidth="45.0" text="1" />
-      <Label fx:id="shoppingCartNameLabel" layoutX="197.0" layoutY="50.0" text="Label" />
+      <Button fx:id="plusButtonShoppingCart" layoutX="852.0" layoutY="42.0" mnemonicParsing="false" onAction="#addToShoppingCartAgain" prefHeight="44.0" prefWidth="45.0" text="+" />
+      <Button fx:id="minusButtonShoppingCart" layoutX="735.0" layoutY="42.0" mnemonicParsing="false" onAction="#removeFromShoppingCartAgain" prefHeight="44.0" prefWidth="45.0" text="-" />
+      <TextField fx:id="textFieldCartAmount" alignment="CENTER" layoutX="792.0" layoutY="45.0" prefHeight="37.0" prefWidth="45.0" text="1">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font></TextField>
+      <Label fx:id="shoppingCartNameLabel" layoutX="197.0" layoutY="50.0" text="Label">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font></Label>
+      <Label fx:id="productDetailLabel" layoutX="428.0" layoutY="23.0" prefHeight="71.0" prefWidth="278.0" text="detail" wrapText="true">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
    </children>
 </fx:root>

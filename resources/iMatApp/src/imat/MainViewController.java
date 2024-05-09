@@ -217,7 +217,13 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private void updateSmallShoppingCartPanel() {
         ShoppingCart shoppingCart = model.getShoppingCart();
-        shoppingCartAmount.setText("" + shoppingCart.getItems().size());
+        int cartAmountTemp = 0;
+        for (int i=0;i<shoppingCart.getItems().size(); i++){
+            cartAmountTemp += shoppingCart.getItems().get(i).getAmount();
+        }
+        shoppingCartAmount.setText("" + cartAmountTemp);
+
+        //shoppingCartAmount.setText("" + shoppingCart.getItems().size());
 
        // itemAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
        // totalCostLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
@@ -233,6 +239,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     private void goToCartButton(ActionEvent event){
         dynamicPane.toFront();
     }
+
 
     //---------------------------Logga in ---------------------------------------------------------------------
 

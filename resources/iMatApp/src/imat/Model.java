@@ -14,6 +14,8 @@ public class Model {
     private static Model instance = null;
     private IMatDataHandler iMatDataHandler;
 
+
+
     private void init() {
         iMatDataHandler = IMatDataHandler.getInstance();
     }
