@@ -206,7 +206,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
 //----------------------------------shopping cart funktioner -------------------------------------------------
 
-
     @FXML
     private void handleClearCartAction(ActionEvent event) {
         model.clearShoppingCart();
@@ -215,9 +214,16 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         updateSmallShoppingCartPanel();
     }
 
-    private void updateSmallShoppingCartPanel() {
+    public void updateSmallShoppingCartPanel() {
+        System.out.println("in updatesmallshoppingcartpanel");
         ShoppingCart shoppingCart = model.getShoppingCart();
-        shoppingCartAmount.setText("" + shoppingCart.getItems().size());
+        int cartAmountTemp = 0;
+        for (int i=0;i<shoppingCart.getItems().size(); i++){
+            cartAmountTemp += (int) shoppingCart.getItems().get(i).getAmount();
+        }
+        shoppingCartAmount.setText("" + cartAmountTemp);
+
+        //shoppingCartAmount.setText("" + shoppingCart.getItems().size());
 
        // itemAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
        // totalCostLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
@@ -233,6 +239,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     private void goToCartButton(ActionEvent event){
         dynamicPane.toFront();
     }
+
 
     //---------------------------Logga in ---------------------------------------------------------------------
 
@@ -250,14 +257,19 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 //-------------------------------Kategorier------------------------------------------------------
 
     private void categoryList(List<ProductCategory> categories){
+        /*denna funktionen är till för att uppdatera vilka kategorier som finns i listan över kategorier*/
         categoryFlowPane.getChildren().clear();
         for (ProductCategory category : categories){
+            //System.out.println(category);
+            //categorys blir faktiskt alla kategorier, en i taget. syns på printen.
             categoryFlowPane.getChildren().add(new iMatCategories(category));
+
+            //kanske att denna inte är vanligt objekt så därför inte kan ta in en av varje?
 
         }
     }
 
     // TODO
-    // fixa kategorier
+    // fixa kategorier, fixa att man kan ta bort en produkt från varukorg med minus.
 
 }

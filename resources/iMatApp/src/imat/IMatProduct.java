@@ -15,20 +15,32 @@ import se.chalmers.cse.dat216.project.ShoppingItem;
 
 import java.io.IOException;
 
-public class IMatProduct extends AnchorPane{
-    @FXML private AnchorPane productView;
-    @FXML private ImageView productImage;
-    @FXML private ImageView favoriteLogo;
-    @FXML private Label productNameLabel;
-    @FXML private Label productPriceLabel;
-    @FXML private Label productPriceLabel1;
-    @FXML private Label productNameLabel1;
-    @FXML private Button buyProductButton;
-    @FXML private Pane infoPane;
-    @FXML private AnchorPane changeAmountPane;
-    @FXML private Button plusButton;
+public class IMatProduct extends AnchorPane {
+    @FXML
+    private AnchorPane productView;
+    @FXML
+    private ImageView productImage;
+    @FXML
+    private ImageView favoriteLogo;
+    @FXML
+    private Label productNameLabel;
+    @FXML
+    private Label productPriceLabel;
+    @FXML
+    private Label productPriceLabel1;
+    @FXML
+    private Label productNameLabel1;
+    @FXML
+    private Button buyProductButton;
+    @FXML
+    private Pane infoPane;
+    @FXML
+    private AnchorPane changeAmountPane;
+    @FXML
+    private Button plusButton;
 
-    @FXML private TextField cardAmountTextField;
+    @FXML
+    private TextField cardAmountTextField;
 
 
     private Model model = Model.getInstance();
@@ -45,8 +57,6 @@ public class IMatProduct extends AnchorPane{
     //ändra detta om du vill ha en annan bild höjd
 
 
-
-
     public IMatProduct(Product product) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("imat_product.fxml"));
         fxmlLoader.setRoot(this);
@@ -61,7 +71,7 @@ public class IMatProduct extends AnchorPane{
         this.product = product;
         productNameLabel.setText(product.getName());
         productPriceLabel.setText(String.format("%.2f", product.getPrice()) + " " + product.getUnit());
-        productImage.setImage(model.getImage(product, kImageWidth, kImageWidth*kImageRatio));
+        productImage.setImage(model.getImage(product, kImageWidth, kImageWidth * kImageRatio));
         productNameLabel1.setText(product.getName());
         productPriceLabel1.setText(String.format("%.2f", product.getPrice()) + " " + product.getUnit());
 
@@ -75,38 +85,63 @@ public class IMatProduct extends AnchorPane{
 
     }
 
+
+    //------------------- BORDE INTE DESSA VARA I ANTINGEN MAINVEIWCONTROLLER ELLER IMATCART?-------------------
+
     @FXML
-    private void addToShoppingCart(ActionEvent event){
+    private void addToShoppingCart(ActionEvent event) {
         model.addToShoppingCart(product);
         changeAmountPane.toFront();
-        cardAmountTextField.setText(""+ amount);
+        cardAmountTextField.setText("" + amount);
+
     }
 
     @FXML
-    private void addToShoppingCartAgain(ActionEvent event){
+    private void addToShoppingCartAgain(ActionEvent event) {
         model.addToShoppingCartAgain(product);
         changeAmountPane.toFront();
-        cardAmountTextField.setText(""+ (amount += 1));
+        cardAmountTextField.setText("" + (amount += 1));
     }
 
 
-
     @FXML
-    private void removeFromShoppingCartAgain(ActionEvent event){
-        int indexToRemove= 0;
-        if(amount != 0) {
-            for (int i=0; i<model.getProducts().size(); i++){
-                if ( product == model.getProducts().get(i)){
-                    indexToRemove = i;
+    private void removeFromShoppingCartAgain(ActionEvent event) {
+        //TODO
+        // denna funkar ej
+       // if (amount != 0 && !model.getProducts().isEmpty()) {
+            //System.out.println("produkten har mer än 1 i amount och listan är inte tom");
+            double index = 0;
+            for (int i = 0; i < model.getProducts().size(); i++) {
+                if (model.getProducts().get(i).equals(product)) {
+                    index = (double) i;
+                    System.out.println("dom är lika!");
                     break;
+                } else {
+                    System.out.println("dom är inte lika:(");
+                    index = -1;
                 }
             }
-            model.removeFromShoppingCartAgain(indexToRemove);
+
+        if (amount == 1) {
+            System.out.println("jag är här");
+            changeAmountPane.toBack();
+            index = index-1;
+        } else {
+            cardAmountTextField.setText("" + (amount -= 1));
+        }
+        model.removeFromShoppingCartAgain(index);
+
+        /*
+        if(amount != 0) {
+            model.removeFromShoppingCartAgain(product);
             changeAmountPane.toFront();
             cardAmountTextField.setText("" + (amount -= 1));
         }
         else{
-            changeAmountPane.toBack();
+            changeAmountPane.toBack();*/
+            //}
+
+            //---------------------------------------------------------------------------------
+
         }
     }
-}

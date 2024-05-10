@@ -91,7 +91,7 @@
                </graphic>
             </Button>
             <Circle fill="#16a3cf" layoutX="985.0" layoutY="17.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text fx:id="shoppingCartAmount" layoutX="981.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="shoppingCartAmount" layoutX="981.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -105,9 +105,9 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="242.0">
                      <children>
-                        <ScrollPane opacity="0.0" prefHeight="602.0" prefWidth="210.0">
+                        <ScrollPane opacity="0.0" prefHeight="602.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="categoryFlowPane" prefHeight="605.0" prefWidth="211.0" />
+                              <FlowPane fx:id="categoryFlowPane" prefHeight="602.0" prefWidth="210.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -116,7 +116,7 @@
                      <children>
                         <ScrollPane prefHeight="600.0" prefWidth="788.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="productsFlowPane" prefHeight="601.0" prefWidth="790.0" />
+                              <FlowPane fx:id="productsFlowPane" prefHeight="600.0" prefWidth="788.0" />
                            </content>
                         </ScrollPane>
                      </children>
