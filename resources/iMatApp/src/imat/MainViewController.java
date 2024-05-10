@@ -72,11 +72,11 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     TextField firstNameTextField;
 
     @FXML
-    TextField adressLabel;
+    TextField LogInAdressTextField;
     @FXML
-    TextField postcodeLabel;
+    TextField LogInPostcodeTextField;
     @FXML
-    TextField phoneNumber;
+    TextField LogInphoneNumberTextField;
 
     @FXML
     FlowPane categoryFlowPane;
@@ -241,6 +241,18 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     }
 
 
+
+
+
+
+    //-------------------------------Leverans funktioner------------------------------------------------------
+
+    @FXML
+    private void putAdressDelivery(ActionEvent event){
+        iMatDataHandler.getCustomer().setAddress();
+    }
+
+
     //---------------------------Logga in ---------------------------------------------------------------------
 
     private void updateAccount(){
@@ -248,9 +260,9 @@ public class MainViewController implements Initializable, ShoppingCartListener {
             customer.setEmail(emailTextField.getText());
             customer.setFirstName(firstNameTextField.getText());
             customer.setLastName(lastNameTextField.getText());
-            customer.setAddress(adressLabel.getText());
-            customer.setPostCode(postcodeLabel.getText());
-            customer.setPhoneNumber(phoneNumber.getText());
+            customer.setAddress(LogInAdressTextField.getText());
+            customer.setPostCode(LogInPostcodeTextField.getText());
+            customer.setPhoneNumber(LogInphoneNumberTextField.getText());
         }
     }
 
