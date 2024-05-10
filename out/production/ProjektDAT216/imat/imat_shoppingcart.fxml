@@ -17,7 +17,7 @@
       </ImageView>
       <Label fx:id="productShoppingCartPrice" layoutX="909.0" layoutY="52.0" text="Pris kr" />
       <Button fx:id="plusButtonShoppingCart" layoutX="852.0" layoutY="42.0" mnemonicParsing="false" onAction="#addToShoppingCartAgain" prefHeight="44.0" prefWidth="45.0" text="+" />
-      <Button fx:id="minusButtonShoppingCart" layoutX="735.0" layoutY="42.0" mnemonicParsing="false" onAction="#removeFromShoppingCartAgain" prefHeight="44.0" prefWidth="45.0" text="-" />
+      <Button fx:id="minusButtonShoppingCart" layoutX="735.0" layoutY="42.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="45.0" text="-" />
       <TextField fx:id="textFieldCartAmount" alignment="CENTER" layoutX="792.0" layoutY="45.0" prefHeight="37.0" prefWidth="45.0" text="1">
          <font>
             <Font name="Arial" size="14.0" />

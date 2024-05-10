@@ -13,6 +13,7 @@ public class Model {
 
     private static Model instance = null;
     private IMatDataHandler iMatDataHandler;
+    private MainViewController mainViewController;
 
 
 
@@ -73,9 +74,22 @@ public class Model {
 
 
 
-    public void removeFromShoppingCartAgain(Product p) {
-        /*ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-        shoppingCart.removeItem(index);*/
+    public void removeFromShoppingCartAgain(double index) {
+
+        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
+        ShoppingItem item = shoppingCart.getItems().get((int)index);
+        if(item.getAmount() == 1){
+            System.out.println("shopping objektet tas bort helt");
+            shoppingCart.removeItem((int)index);
+        }
+        else{
+            System.out.println("amountet ändras");
+            item.setAmount(item.getAmount() -1);
+            System.out.println("" + item.getAmount());
+        }
+        shoppingCart.fireShoppingCartChanged(item,false);
+
+
 
         //DENNA FUNKAR EJ
 
@@ -103,7 +117,8 @@ public class Model {
         ShoppingItem item= new ShoppingItem(p);
         double amount = item.getAmount();
         item.setAmount(amount - 1);*/
-        System.out.println("" + iMatDataHandler.getShoppingCart().getItems());
+        //System.out.println("" + iMatDataHandler.getShoppingCart().getItems());
+        //System.out.println("" + item.getAmount());
     }
 
 

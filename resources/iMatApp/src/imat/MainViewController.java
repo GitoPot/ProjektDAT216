@@ -206,7 +206,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
 //----------------------------------shopping cart funktioner -------------------------------------------------
 
-
     @FXML
     private void handleClearCartAction(ActionEvent event) {
         model.clearShoppingCart();
@@ -215,7 +214,8 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         updateSmallShoppingCartPanel();
     }
 
-    private void updateSmallShoppingCartPanel() {
+    public void updateSmallShoppingCartPanel() {
+        System.out.println("in updatesmallshoppingcartpanel");
         ShoppingCart shoppingCart = model.getShoppingCart();
         int cartAmountTemp = 0;
         for (int i=0;i<shoppingCart.getItems().size(); i++){

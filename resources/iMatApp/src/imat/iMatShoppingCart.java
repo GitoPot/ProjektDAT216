@@ -80,7 +80,7 @@ public class iMatShoppingCart extends AnchorPane {
         model.addToShoppingCartAgain(product);
         textFieldCartAmount.setText("" + (amount += 1));
     }
-
+/*
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event){
         if(amount != 0) {
@@ -93,7 +93,7 @@ public class iMatShoppingCart extends AnchorPane {
             // TODO
             // remove item somehow
         }
-    }
+    }*/
 
     //------------------------------------------------------------------------------------------------------
 
