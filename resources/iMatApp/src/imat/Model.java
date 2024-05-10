@@ -89,8 +89,6 @@ public class Model {
         }
         shoppingCart.fireShoppingCartChanged(item,false);
 
-
-
         //DENNA FUNKAR EJ
 
         //det går inte att ändra amount på
