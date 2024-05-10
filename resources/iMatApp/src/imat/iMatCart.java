@@ -10,7 +10,10 @@ import se.chalmers.cse.dat216.project.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
@@ -61,15 +64,18 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
 
     private void updateShoppingCartList(List<ShoppingItem> products){
+
+        List<Integer> tempList= new ArrayList<Integer>();
         cartFlowPane.getChildren().clear();
         for(ShoppingItem item : shoppingCart.getItems()){
-            cartFlowPane.getChildren().add(new iMatShoppingCart(item.getProduct()));
-           // int amount = (int) item.getAmount();
-            // int x = 0;
-           // ShoppingItem lastItem = shoppingCart.getItems().get(x);
-            //for (int i=1; i<shoppingCart.getItems().size(); i++){
-               // if (shoppingCart.getItems().get(i).getProduct().getProductId() == lastItem.getProduct().getProductId())
-            // cartAmountTextField.setText("" + (amount += 1));
+            iMatShoppingCart sc;
+            if (!tempList.contains(item.getProduct().getProductId())){
+                sc = new iMatShoppingCart(item.getProduct());
+                int amount = (int) item.getAmount();
+                sc.textFieldCartAmount.setText(""+amount);
+                cartFlowPane.getChildren().add(sc);
+                tempList.add(item.getProduct().getProductId());
+            }
         }
     }
 
@@ -77,9 +83,15 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
     private void updateView() {
 
-        totalAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
-        totalPriceLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
-
+        //_----------------------DETTA ÄR COPY PASTE FRÅN MAIN VIEW CONTROLLER-----------
+         int cartAmountTemp = 0;
+                 for (int i=0;i<shoppingCart.getItems().size(); i++){
+                     cartAmountTemp += shoppingCart.getItems().get(i).getAmount();
+                 }
+         //------------------------------------------------------------------------------
+        
+         totalAmountLabel.setText("Antal varor: " + cartAmountTemp);  // VA FÖRUT totalAmountLabel.setText("Antal varor: " + shoppingCart.get...().size())
+         totalPriceLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
         //System.out.println("updateView");
 
 

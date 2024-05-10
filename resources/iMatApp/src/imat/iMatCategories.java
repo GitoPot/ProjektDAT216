@@ -20,8 +20,13 @@ public class iMatCategories extends AnchorPane {
 
     @FXML
     Label categoryLabel;
+
+    private Model model = Model.getInstance();
+
     private MainViewController mainViewController;
     private Product product;
+    private ProductCategory category1;
+
     public iMatCategories(ProductCategory category) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("imat_categories.fxml"));
         fxmlLoader.setRoot(this);
@@ -32,14 +37,14 @@ public class iMatCategories extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        //System.out.println(category.getDeclaringClass().getSimpleName()); //denna skriver ut vilken klass objektet tillhör, ville kolla så de inte va en string.
+        this.category1 = category;
         categoryLabel.setText("" + category);
-
     }
 
     @FXML
     private void categorySearch(ActionEvent event){
-        List<Product> matches = Model.findProducts(categoryLabel.getText());
+        List<Product> matches = model.findProducts(categoryLabel.getText());
         mainViewController.updateProductList(matches);
     }
 
