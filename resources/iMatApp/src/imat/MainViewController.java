@@ -101,6 +101,9 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     @FXML
     FlowPane categoryFlowPane;
 
+    @FXML
+    Button favoriteCategoryButton;
+
 
 
     IMatDataHandler iMatDataHandler = IMatDataHandler.getInstance();
@@ -246,5 +249,11 @@ public class MainViewController implements Initializable, ShoppingCartListener {
             categoryFlowPane.getChildren().add(new iMatCategories(category, this));
         }
     }
+
+    @FXML
+    private void categoryFavoriteButton(ActionEvent event){
+        updateProductList(model.getFavorites());
+    }
+
 
 }

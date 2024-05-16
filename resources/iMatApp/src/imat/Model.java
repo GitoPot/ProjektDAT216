@@ -16,6 +16,10 @@ public class Model {
     private MainViewController mainViewController;
 
 
+    private final ArrayList<String> months = new ArrayList<String>(Arrays.asList("1", "2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12"));
+    private final ArrayList<String> years = new ArrayList<String>(Arrays.asList("24", "25", "26", "27", "28", "29", "30"));
+
+
 
     private void init() {
         iMatDataHandler = IMatDataHandler.getInstance();
@@ -51,10 +55,38 @@ public class Model {
     }
 
     public void clearShoppingCart() {
-
         iMatDataHandler.getShoppingCart().clear();
 
     }
+    public Customer getCustomer() {
+        return iMatDataHandler.getCustomer();
+    }
+    public List<String> getMonths() {
+        return months;
+    }
+
+    public List<String> getYears() {
+        return years;
+    }
+
+    public CreditCard getCreditCard() {
+        return iMatDataHandler.getCreditCard();
+    }
+
+    public void placeOrder() {
+
+        iMatDataHandler.placeOrder();
+
+    }
+
+    public void addToFavorite(Product p){
+        iMatDataHandler.addFavorite(p);
+    }
+
+    public List<Product> getFavorites(){
+        return iMatDataHandler.favorites();
+    }
+
 
     public void removeFromFavorite(Product p){
         iMatDataHandler.removeFavorite(p);
