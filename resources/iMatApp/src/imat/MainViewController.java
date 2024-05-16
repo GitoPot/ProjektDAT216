@@ -11,10 +11,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -72,11 +69,34 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     TextField firstNameTextField;
 
     @FXML
-    TextField LogInAdressTextField;
+    TextField adressTextField;
     @FXML
-    TextField LogInPostcodeTextField;
+    TextField postcodeTextField;
     @FXML
-    TextField LogInphoneNumberTextField;
+    TextField phoneNumberTextField;
+
+    @FXML
+    TextField orderEmailTextField;
+    @FXML
+    TextField orderFirstNameTextField;
+    @FXML
+    TextField orderLastNameTextField;
+    @FXML
+    TextField orderAdressTextField;
+    @FXML
+    TextField orderPostcodeTextField;
+    @FXML
+    TextField orderPhoneNumberTextField;
+    @FXML
+    TextField orderCardnumberTextField;
+    @FXML
+    TextField orderCardCvcTextField; ////
+    @FXML
+    TextField orderCardholderNameTextField;/////
+    @FXML
+    ComboBox orderCardMonthComboBox;///
+    @FXML
+    ComboBox orderCardYearComboBox;////
 
     @FXML
     FlowPane categoryFlowPane;
@@ -91,6 +111,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private Customer customer;
 
+    private CreditCard creditCard;
 
 
 
@@ -105,7 +126,9 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         //pathLabel.setText(iMatDirectory);
 
         updateProductList(model.getProducts());
-        categoryList(model.getCategories());
+        categoryList();
+        this.customer = model.getCustomer();
+
 
 
         // Load the NamePanel and add it to dynamicPane
@@ -138,11 +161,9 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     @FXML
     private void startShoppingButton(ActionEvent event){
-       // updateAccount();
+        updateAccount();
         loginPane.toBack();
     }
-
-
 
 
 //----------------------- search funktioner ------------------------------------------
@@ -158,43 +179,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     }
 
 
-//------------------------------- översta rektangel account funktioner ---------------------------------------
-
-
-    @FXML
-    private void handleShowAccountAction(ActionEvent event) {
-        /*
-        Denna funktion gör att account knappen gör det den ska göra.
-        */
-        openAccountView();
-    }
-
-
-    public void openAccountView() {
-        /*
-        denna funktion gör så att användar delen visas visas
-        */
-        accountPane.toFront();
-    }
-
-
-    /*
-    private boolean LoggedInChecker (){
-        /*
-        denna funktion kollar vilken account view som ska visas, logga in sidan
-        eller användarens informtion sidan
-         *//*
-        if (UserLoggedInChecker == null){
-            NotLoggedIn();
-        }
-        else if (UserLoggedInChecker == false){
-            NotLoggedIn();
-        }
-        else if (UserLoggedInChecker == true){
-            LoggedIn();
-        }
-    }
-*/
 //---------------------------------- Översta rektangeln andra funktioner ----------------------------------
 
     @FXML
@@ -231,57 +215,36 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     }
 
     @FXML
-    private void showSmallShoppingCartButton(ActionEvent event){
-        smallShoppingCart.toFront();
-    }
-
-    @FXML
-    private void goToCartButton(ActionEvent event){
+    public void goToCartButton(ActionEvent event){
         dynamicPane.toFront();
     }
 
-
-
-
-
-
-    //-------------------------------Leverans funktioner------------------------------------------------------
-
     @FXML
-    private void putAdressDelivery(ActionEvent event){
-        iMatDataHandler.getCustomer().setAddress();
+    public void closeCartButton() {
+        dynamicPane.toBack();
+        startingPane.toFront();
     }
 
 
     //---------------------------Logga in ---------------------------------------------------------------------
 
     private void updateAccount(){
-        if (customer != null) {
-            customer.setEmail(emailTextField.getText());
-            customer.setFirstName(firstNameTextField.getText());
-            customer.setLastName(lastNameTextField.getText());
-            customer.setAddress(LogInAdressTextField.getText());
-            customer.setPostCode(LogInPostcodeTextField.getText());
-            customer.setPhoneNumber(LogInphoneNumberTextField.getText());
-        }
+        customer.setEmail(emailTextField.getText());
+        customer.setFirstName(firstNameTextField.getText());
+        customer.setLastName(lastNameTextField.getText());
+        customer.setAddress(adressTextField.getText());
+        customer.setPostCode(postcodeTextField.getText());
+        customer.setPhoneNumber(phoneNumberTextField.getText());
     }
+
 
 //-------------------------------Kategorier------------------------------------------------------
 
-    private void categoryList(List<ProductCategory> categories){
-        /*denna funktionen är till för att uppdatera vilka kategorier som finns i listan över kategorier*/
+    private void categoryList(){
         categoryFlowPane.getChildren().clear();
-        for (ProductCategory category : categories){
-            //System.out.println(category);
-            //categorys blir faktiskt alla kategorier, en i taget. syns på printen.
-            categoryFlowPane.getChildren().add(new iMatCategories(category));
-
-            //kanske att denna inte är vanligt objekt så därför inte kan ta in en av varje?
-
+        for (ProductCategory category : ProductCategory.values()){
+            categoryFlowPane.getChildren().add(new iMatCategories(category, this));
         }
     }
-
-    // TODO
-    // fixa kategorier, fixa att man kan ta bort en produkt från varukorg med minus.
 
 }

@@ -35,12 +35,17 @@ public class IMatProduct extends AnchorPane {
     @FXML
     private Pane infoPane;
     @FXML
-    private AnchorPane changeAmountPane;
+    private Pane changeAmountPane;
     @FXML
     private Button plusButton;
 
     @FXML
     private TextField cardAmountTextField;
+
+    @FXML
+    private Button favoriteButton;
+    @FXML
+    private Button filledFavoriteButton;
 
 
     private Model model = Model.getInstance();
@@ -85,6 +90,30 @@ public class IMatProduct extends AnchorPane {
 
     }
 
+    @FXML
+    public void changePane(){
+        changeAmountPane.toBack();
+    }
+
+    //------------------------------favorit-knappar------------------------------------------------------------
+
+    @FXML
+    private void favoriteButton(ActionEvent event){
+        model.addToFavorite(product);
+        filledFavoriteButton.toFront();
+    }
+
+    @FXML
+    private void undoFavoriteButton(ActionEvent event){
+        model.removeFromFavorite(product);
+        favoriteButton.toFront();
+        filledFavoriteButton.toBack();
+
+    }
+
+
+
+
 
     //------------------- BORDE INTE DESSA VARA I ANTINGEN MAINVEIWCONTROLLER ELLER IMATCART?-------------------
 
@@ -100,14 +129,29 @@ public class IMatProduct extends AnchorPane {
     private void addToShoppingCartAgain(ActionEvent event) {
         model.addToShoppingCartAgain(product);
         changeAmountPane.toFront();
+
         cardAmountTextField.setText("" + (amount += 1));
     }
+
+
 
 
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event) {
         //TODO
         // denna funkar ej
+
+        model.removeFromShoppingCart(product);
+        if(amount == 1){
+            changeAmountPane.toBack();
+        }
+        else{
+            cardAmountTextField.setText("" + (amount -= 1));
+        }
+
+
+
+        /*
        // if (amount != 0 && !model.getProducts().isEmpty()) {
             //System.out.println("produkten har mer än 1 i amount och listan är inte tom");
             double index = 0;
@@ -130,7 +174,7 @@ public class IMatProduct extends AnchorPane {
             cardAmountTextField.setText("" + (amount -= 1));
         }
         model.removeFromShoppingCartAgain(index);
-
+        */
         /*
         if(amount != 0) {
             model.removeFromShoppingCartAgain(product);

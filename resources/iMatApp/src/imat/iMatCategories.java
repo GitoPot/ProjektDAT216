@@ -11,6 +11,8 @@ import se.chalmers.cse.dat216.project.ProductCategory;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,7 +29,7 @@ public class iMatCategories extends AnchorPane {
     private Product product;
     private ProductCategory category1;
 
-    public iMatCategories(ProductCategory category) {
+    public iMatCategories(ProductCategory category, MainViewController mainViewController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("imat_categories.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -37,10 +39,13 @@ public class iMatCategories extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        //System.out.println(category.getDeclaringClass().getSimpleName()); //denna skriver ut vilken klass objektet tillhör, ville kolla så de inte va en string.
         this.category1 = category;
+        this.mainViewController = mainViewController;
         categoryLabel.setText("" + category);
+        System.out.println(categoryLabel.getText());
     }
+
+
 
     @FXML
     private void categorySearch(ActionEvent event){

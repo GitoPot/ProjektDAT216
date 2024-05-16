@@ -11,40 +11,52 @@
 
 <fx:root fx:id="productView" prefHeight="251.0" prefWidth="228.0" style="-fx-background-color: #16A3CF;" styleClass="product-item" stylesheets="@imat_app.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane fx:id="changeAmountPane" prefHeight="251.0" prefWidth="228.0">
-         <children>
-            <Pane layoutX="16.0" layoutY="162.0" prefHeight="85.0" prefWidth="194.0" style="-fx-background-color: #F3CF12;" styleClass="product-item" stylesheets="@imat_app.css">
-               <children>
-                  <Label fx:id="productPriceLabel1" layoutX="11.0" layoutY="35.0" text="Pris kr" />
-                  <Label fx:id="productNameLabel1" layoutX="11.0" layoutY="9.0" text="Produkt" />
-                  <Button fx:id="minusButton" layoutX="85.0" layoutY="43.0" mnemonicParsing="false" onAction="#removeFromShoppingCartAgain" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: #0B5168;" text="-" textFill="WHITE" wrapText="true" />
-                  <TextField fx:id="cardAmountTextField" layoutX="117.0" layoutY="43.0" prefHeight="25.0" prefWidth="32.0" text="1" />
-                  <Button fx:id="plusButton" layoutX="156.0" layoutY="43.0" mnemonicParsing="false" onAction="#addToShoppingCartAgain" prefHeight="17.0" prefWidth="18.0" style="-fx-background-color: #0B5168;" text="+" textFill="WHITE" wrapText="true" />
-               </children>
-            </Pane>
-         </children>
-      </AnchorPane>
-      <ImageView fx:id="productImage" fitHeight="142.0" fitWidth="230.0" layoutX="16.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="filledFavoriteButton" layoutX="174.0" layoutY="10.0" mnemonicParsing="false" onAction="#undoFavoriteButton" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fx:id="favoriteFilledImageView" fitHeight="28.0" fitWidth="28.0" onMouseClicked="#undoFavoriteButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Downloads/favorite_24dp_FILL1_wght400_GRAD0_opsz24%20(2).png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fx:id="productImage" fitHeight="147.0" fitWidth="194.0" layoutX="16.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../imat/images/product_22.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="favoriteLogo" fitHeight="28.0" fitWidth="30.0" layoutX="188.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-      <Pane fx:id="originalPane" layoutX="16.0" layoutY="162.0" prefHeight="85.0" prefWidth="194.0" style="-fx-background-color: #F3CF12;" styleClass="product-item" stylesheets="@imat_app.css">
+      <Pane fx:id="changeAmountPane" layoutX="16.0" layoutY="171.0" prefHeight="70.0" prefWidth="194.0" style="-fx-background-color: #f3cf12;" styleClass="product-item">
          <children>
-            <Button fx:id="buyProductButton" layoutX="96.0" layoutY="37.0" mnemonicParsing="false" onAction="#addToShoppingCart" prefHeight="42.0" prefWidth="90.0" style="-fx-background-color: #0B5168;" text="Lägg till" textFill="WHITE">
+            <Label fx:id="productPriceLabel1" layoutX="11.0" layoutY="35.0" text="Pris kr" />
+            <Label fx:id="productNameLabel1" layoutX="11.0" layoutY="9.0" text="Produkt" />
+            <Button fx:id="plusButton" layoutX="160.0" layoutY="21.0" mnemonicParsing="false" onAction="#addToShoppingCartAgain" prefHeight="28.0" prefWidth="28.0" text="+">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font></Button>
-            <Label fx:id="productPriceLabel" layoutX="4.0" layoutY="49.0" text="Pris kr">
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <TextField fx:id="cardAmountTextField" layoutX="120.0" layoutY="23.0" prefHeight="17.0" prefWidth="32.0" />
+            <Button fx:id="minusButton" layoutX="83.0" layoutY="21.0" mnemonicParsing="false" onAction="#removeFromShoppingCartAgain" prefHeight="28.0" prefWidth="28.0" text="-">
                <font>
-                  <Font name="Arial" size="14.0" />
-               </font></Label>
-            <Label fx:id="productNameLabel" layoutX="7.0" layoutY="10.0" text="Produkt">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font></Label>
+                  <Font size="10.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
+      <Pane layoutX="16.0" layoutY="171.0" prefHeight="70.0" prefWidth="194.0" style="-fx-background-color: #F3CF12;" styleClass="product-item" stylesheets="@imat_app.css">
+         <children>
+            <Button fx:id="buyProductButton" layoutX="90.0" layoutY="14.0" mnemonicParsing="false" onAction="#addToShoppingCart" prefHeight="42.0" prefWidth="90.0" style="-fx-background-color: #16A3CF;" text="Köp" />
+            <Label fx:id="productPriceLabel" layoutX="11.0" layoutY="35.0" text="Pris kr" />
+            <Label fx:id="productNameLabel" layoutX="11.0" layoutY="9.0" text="Produkt" />
+         </children>
+      </Pane>
+      <Button fx:id="favoriteButton" layoutX="174.0" layoutY="10.0" mnemonicParsing="false" onAction="#favoriteButton" prefHeight="17.0" prefWidth="32.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fx:id="favoriteImageView" fitHeight="28.0" fitWidth="30.0" onMouseClicked="#favoriteButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Downloads/favorite_FILL0_wght400_GRAD0_opsz24.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </fx:root>

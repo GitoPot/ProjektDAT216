@@ -3,7 +3,9 @@ package imat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import se.chalmers.cse.dat216.project.*;
@@ -24,12 +26,40 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
     @FXML
     private AnchorPane leveransPane;
     @FXML
+    private AnchorPane orderDonePane;
+    @FXML
     private Label totalAmountLabel;
     @FXML
     private Label totalPriceLabel;
 
-    @FXML private TextField cartAmountTextField;
+    @FXML
+    private ComboBox orderCardMonthComboBox;
+    @FXML
+    private ComboBox orderCardYearComboBox;
+    @FXML
+    TextField orderEmailTextField;
+    @FXML
+    TextField orderFirstNameTextField;
+    @FXML
+    TextField orderLastNameTextField;
+    @FXML
+    TextField orderAdressTextField;
+    @FXML
+    TextField orderPostcodeTextField;
+    @FXML
+    TextField orderPhoneNumberTextField;
+    @FXML
+    TextField orderCardnumberTextField;
+    @FXML
+    TextField orderCardCvcTextField; ////
+    @FXML
+    TextField orderCardholderNameTextField;/////
 
+    @FXML
+    TextArea orderTextArea;
+
+    private IMatProduct product;
+    private Customer customer;
 
     private final Model model = Model.getInstance();
     private ShoppingCart shoppingCart = model.getShoppingCart();
@@ -47,13 +77,110 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
         this.mainViewController = mainViewController;
 
         shoppingCart.addShoppingCartListener(this);
+        this.customer = model.getCustomer();
+
+        setupCreditCard();
 
         updateView();
 
     }
+
+
     @FXML
-    private void goToCheckout(ActionEvent event){
+    public void goToCheckout(ActionEvent event){
+        updateAccount();
         leveransPane.toFront();
+        setCreditCardInformation();
+
+    }
+    @FXML
+    public void pay(ActionEvent event){
+        updateCreditCard();
+        showOrder();
+        model.placeOrder();
+        orderDonePane.toFront();
+    }
+
+    @FXML
+    public void clearShoppingCart(ActionEvent event){
+        model.clearShoppingCart();
+    }
+    @FXML
+    public void goBackToShoppingCart(ActionEvent event){ leveransPane.toBack(); }
+
+    @FXML
+    public void goBackToStart(ActionEvent event){
+        mainViewController.closeCartButton();
+    }
+
+    @FXML
+    public void orderDone(ActionEvent event){
+        orderDonePane.toBack();
+        leveransPane.toBack();
+        goBackToStart(event);
+        product.changePane();
+    }
+
+
+
+    public void setupCreditCard(){
+        orderCardYearComboBox.getItems().addAll(model.getYears());
+        orderCardMonthComboBox.getItems().addAll(model.getMonths());
+
+    }
+
+
+    private void setCreditCardInformation(){
+        CreditCard card = model.getCreditCard();
+
+        orderCardnumberTextField.setText(card.getCardNumber());
+        orderCardholderNameTextField.setText(card.getHoldersName());
+        orderCardCvcTextField.setText(""+card.getVerificationCode());
+
+
+        orderCardMonthComboBox.getSelectionModel().select(""+card.getValidMonth());
+        orderCardYearComboBox.getSelectionModel().select(""+card.getValidYear());
+
+
+    }
+
+
+    private void updateAccount(){
+        if (customer != null){
+        orderEmailTextField.setText(customer.getEmail());
+        orderFirstNameTextField.setText(customer.getFirstName());
+        orderLastNameTextField.setText(customer.getLastName());
+        orderAdressTextField.setText(customer.getAddress());
+        orderPostcodeTextField.setText(customer.getPostCode());
+        orderPhoneNumberTextField.setText(customer.getPhoneNumber());
+
+        }
+    }
+    private void updateCreditCard() {
+
+        CreditCard card = model.getCreditCard();
+
+        card.setCardNumber(orderCardnumberTextField.getText());
+        card.setHoldersName(orderCardholderNameTextField.getText());
+
+        String selectedValue = (String) orderCardMonthComboBox.getSelectionModel().getSelectedItem();
+        card.setValidMonth(Integer.parseInt(selectedValue));
+
+        selectedValue = (String) orderCardYearComboBox.getSelectionModel().getSelectedItem();
+        card.setValidYear(Integer.parseInt(selectedValue));
+
+        card.setVerificationCode(Integer.parseInt(orderCardCvcTextField.getText()));
+    }
+
+    private void showOrder(){
+
+        String cartText = "";
+        for(ShoppingItem item: shoppingCart.getItems()){
+            cartText = cartText + item.getProduct().getName() + " " + item.getAmount() + "\n";
+
+        }
+        orderTextArea.setText(cartText);
+
     }
 
     @Override

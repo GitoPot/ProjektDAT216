@@ -34,8 +34,8 @@ public class Model {
         return IMatDataHandler.getInstance().findProducts(s);
 
     }
-    public Product getProduct(int idNbr) {
-        return iMatDataHandler.getProduct(idNbr);
+    public List<Product> getProducts(ProductCategory category) {
+        return iMatDataHandler.getProducts(category);
     }
 
     public List<Product> getProducts() {
@@ -56,8 +56,15 @@ public class Model {
 
     }
 
+    public void removeFromFavorite(Product p){
+        iMatDataHandler.removeFavorite(p);
+    }
 
-
+    public void removeFromShoppingCart(Product p){
+        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
+        ShoppingItem item = new ShoppingItem(p);
+        Model.getInstance().getShoppingCart().removeItem(item);
+    }
 
 
     public void addToShoppingCart(Product p) {
