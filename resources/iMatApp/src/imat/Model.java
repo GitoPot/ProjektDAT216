@@ -38,6 +38,10 @@ public class Model {
         return IMatDataHandler.getInstance().findProducts(s);
 
     }
+
+    public List<Order> getOrders(){
+        return iMatDataHandler.getOrders();
+    }
     public List<Product> getProducts(ProductCategory category) {
         return iMatDataHandler.getProducts(category);
     }
@@ -74,9 +78,7 @@ public class Model {
     }
 
     public void placeOrder() {
-
         iMatDataHandler.placeOrder();
-
     }
 
     public void addToFavorite(Product p){
@@ -85,6 +87,10 @@ public class Model {
 
     public List<Product> getFavorites(){
         return iMatDataHandler.favorites();
+    }
+
+    public void shutDown(){
+        iMatDataHandler.shutDown();
     }
 
 

@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import se.chalmers.cse.dat216.project.Product;
+import se.chalmers.cse.dat216.project.ProductDetail;
 import se.chalmers.cse.dat216.project.ShoppingItem;
 
 import java.io.IOException;
@@ -90,16 +91,23 @@ public class IMatProduct extends AnchorPane {
 
     }
 
+
     @FXML
     public void changePane(){
         changeAmountPane.toBack();
     }
 
+
     //------------------------------favorit-knappar------------------------------------------------------------
 
     @FXML
+    public void setFavoriteLogo(){
+        filledFavoriteButton.toFront();
+    }
+    @FXML
     private void favoriteButton(ActionEvent event){
         model.addToFavorite(product);
+        favoriteButton.toBack();
         filledFavoriteButton.toFront();
     }
 
@@ -112,6 +120,10 @@ public class IMatProduct extends AnchorPane {
     }
 
 
+
+    public ProductDetail getDetail() {
+        return model.getDetail(product);
+    }
 
 
 
@@ -138,16 +150,26 @@ public class IMatProduct extends AnchorPane {
 
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event) {
-        //TODO
-        // denna funkar ej
-
-        model.removeFromShoppingCart(product);
+        if(amount == 1){
+            model.removeFromShoppingCart(product);
+            changeAmountPane.toBack();
+        }
+        else{
+            cardAmountTextField.setText("" + (amount -= 1));
+            model.removeFromShoppingCart(product);
+            for(int i = amount-1; i>-1; i--){
+                model.addToShoppingCart(product);
+            }
+        }
+        /*
         if(amount == 1){
             changeAmountPane.toBack();
         }
         else{
             cardAmountTextField.setText("" + (amount -= 1));
         }
+
+        */
 
 
 

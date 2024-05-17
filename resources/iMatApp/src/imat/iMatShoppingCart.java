@@ -80,20 +80,19 @@ public class iMatShoppingCart extends AnchorPane {
         model.addToShoppingCartAgain(product);
         textFieldCartAmount.setText("" + (amount += 1));
     }
-/*
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event){
-        if(amount != 0) {
-            //TODO
-            // denna funkar ej
-            model.removeFromShoppingCartAgain(product);
-            textFieldCartAmount.setText("" + (amount -= 1));
+        if(amount == 1){
+            model.removeFromShoppingCart(product);
         }
         else{
-            // TODO
-            // remove item somehow
+            textFieldCartAmount.setText("" + (amount -= 1));
+            model.removeFromShoppingCart(product);
+            for(int i = amount-1; i>-1; i--){
+                model.addToShoppingCart(product);
+            }
         }
-    }*/
+    }
 
     //------------------------------------------------------------------------------------------------------
 

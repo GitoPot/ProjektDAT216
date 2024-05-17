@@ -4,19 +4,19 @@ package imat;
 //import java.awt.event.ActionEvent;
 import javafx.event.ActionEvent;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import se.chalmers.cse.dat216.project.*;
+
+import javax.swing.*;
 
 public class MainViewController implements Initializable, ShoppingCartListener {
 
@@ -104,6 +104,56 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     @FXML
     Button favoriteCategoryButton;
 
+    @FXML
+    AnchorPane detailPane;
+
+    @FXML
+    Label detailLabel;
+
+    @FXML
+    Label originLabel;
+
+    @FXML
+    Label brandLabel;
+
+    @FXML
+    Label contentsLabel;
+
+    @FXML
+    Button profileButton;
+
+    @FXML
+    AnchorPane profilePane;
+    @FXML
+    Button showOrderHistory;
+
+    @FXML
+    Button showProfile;
+    @FXML
+    AnchorPane orderHistoryPane;
+    @FXML
+    Label profileLabel;
+    @FXML
+    Button startShoppingButton;
+
+    @FXML
+    TextArea order1;
+    @FXML
+    TextArea order2;
+    @FXML
+    TextArea order3;
+    @FXML
+    Label order1Date;
+    @FXML
+    Label order2Date;
+    @FXML
+    Label order3Date;
+
+
+
+
+
+
 
 
     IMatDataHandler iMatDataHandler = IMatDataHandler.getInstance();
@@ -116,6 +166,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private CreditCard creditCard;
 
+    private IMatProduct iMatProduct;
 
 
 
@@ -131,6 +182,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         updateProductList(model.getProducts());
         categoryList();
         this.customer = model.getCustomer();
+        this.iMatProduct = iMatProduct;
 
 
 
@@ -140,7 +192,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         // There is an fxml file NamePanel.fxml and a corresponding class NamePanel.java
         // Simply create a new NamePanel object and add it as a child of dynamicPane
         // The NamePanel holds a reference to the main controller (this class)
-        AnchorPane cartPane = new iMatCart(this);
+        AnchorPane cartPane = new iMatCart(this,iMatProduct);
         dynamicPane.getChildren().add(cartPane);
 
     }
@@ -168,6 +220,12 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         loginPane.toBack();
     }
 
+    @FXML
+    private void backButton(ActionEvent event){
+        profilePane.toBack();
+        orderHistoryPane.toBack();
+    }
+
 
 //----------------------- search funktioner ------------------------------------------
 
@@ -185,10 +243,108 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 //---------------------------------- Översta rektangeln andra funktioner ----------------------------------
 
     @FXML
-    private void escapeHatchButton(ActionEvent event){
+    public void escapeHatchButton(MouseEvent event){
+        updateProductList(model.getProducts());
+        dynamicPane.toBack();
         startingPane.toFront();
     }
 
+    @FXML
+    public void profileButton(ActionEvent event){
+        profilePane.toFront();
+    }
+
+    @FXML
+    private void showProfileInformation(ActionEvent event){
+        loginPane.toFront();
+        profileLabel.setText("Användarinformation");
+        startShoppingButton.setText("Spara");
+    }
+//--------------------------------------OrderVy----------------------------------------------------------------------
+    @FXML
+    private void showOrderHistory(ActionEvent event){
+        orderHistoryPane.toFront();
+        orderHistory();
+    }
+
+    /*
+    private void orderHistory(){
+        ArrayList<Integer> ordernumbers = new ArrayList<>();
+        for(Order item : model.getOrders()){
+            ordernumbers.add(item.getOrderNumber());
+            System.out.println(ordernumbers);
+            String name = "";
+            if(ordernumbers.getLast() == item.getOrderNumber()){
+                for(ShoppingItem item1 : item.getItems()){
+                    name = name + item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
+                }
+                order1.setText(name);
+            }
+            if(ordernumbers.size() > 1){
+                if(ordernumbers.get(ordernumbers.size() - 2) == item.getOrderNumber()){
+                    for(ShoppingItem item1 : item.getItems()){
+                        name = name + item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
+                    }
+                    order2.setText(name);
+                }
+            }
+            if(ordernumbers.size() > 2){
+                if(ordernumbers.get(ordernumbers.size() - 3) == item.getOrderNumber()){
+                    for(ShoppingItem item1 : item.getItems()){
+                        name = name + item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
+                    }
+                    order3.setText(name);
+                }
+            }
+        }
+    }
+     */
+    private void orderHistory(){
+        List<Integer> ordernumbers = new ArrayList<>();
+        for(Order item : model.getOrders()){
+            ordernumbers.add(item.getOrderNumber());
+        }
+        int size = ordernumbers.size();
+        for (int i = size - 1; i >= Math.max(0, size - 3); i--) {  //Går igenom de tre senaste elementen i listan bakifrån
+            int orderNumber = ordernumbers.get(i);
+            String name = "";
+            String date = "";
+
+            for (Order item : model.getOrders()) {
+                if (item.getOrderNumber() == orderNumber) {
+                    date =  date + item.getDate();
+                    for (ShoppingItem item1 : item.getItems()) {
+                        name += item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
+                    }
+
+                    if (i == size - 1) {  //Senaste ordern till första textarean
+                        order1.setText(name);
+                        order1Date.setText(date);
+                    } else if (i == size - 2) { //Näst senaste ordern till första textarean
+                        order2.setText(name);
+                        order2Date.setText(date);
+                    } else if (i == size - 3) { //Tredje senaste ordern till första textarean
+                        order3.setText(name);
+                        order3Date.setText(date);
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+//----------------------------------Detaljvy av produkt ----------------------------------------------------------------
+
+    @FXML
+    private void showDetailView(ActionEvent event){
+       // detailpane.tofront();
+        ProductDetail detail = iMatProduct.getDetail();
+        detailLabel.setText(detail.getDescription());
+        originLabel.setText(detail.getOrigin());
+        brandLabel.setText(detail.getBrand());
+        contentsLabel.setText(detail.getContents());
+    }
 
 
 //----------------------------------shopping cart funktioner -------------------------------------------------
@@ -253,6 +409,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     @FXML
     private void categoryFavoriteButton(ActionEvent event){
         updateProductList(model.getFavorites());
+        // iMatProduct.setFavoriteLogo();
     }
 
 

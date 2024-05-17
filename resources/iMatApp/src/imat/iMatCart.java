@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import se.chalmers.cse.dat216.project.*;
 import javafx.scene.layout.AnchorPane;
@@ -63,7 +64,7 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
     private final Model model = Model.getInstance();
     private ShoppingCart shoppingCart = model.getShoppingCart();
-    public iMatCart(MainViewController mainViewController){
+    public iMatCart(MainViewController mainViewController, IMatProduct product){
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("imat_cart.fxml"));
         fxmlLoader.setRoot(this);
@@ -75,6 +76,7 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
             throw new RuntimeException(exception);
         }
         this.mainViewController = mainViewController;
+        this.product = product;
 
         shoppingCart.addShoppingCartListener(this);
         this.customer = model.getCustomer();
@@ -102,6 +104,10 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
     }
 
     @FXML
+    public void escapeHatch(MouseEvent event){
+        mainViewController.escapeHatchButton(event);
+    }
+    @FXML
     public void clearShoppingCart(ActionEvent event){
         model.clearShoppingCart();
     }
@@ -111,6 +117,8 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
     @FXML
     public void goBackToStart(ActionEvent event){
         mainViewController.closeCartButton();
+        product.changePane();
+
     }
 
     @FXML
@@ -175,11 +183,13 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
     private void showOrder(){
 
         String cartText = "";
+        String totaltText = "";
         for(ShoppingItem item: shoppingCart.getItems()){
-            cartText = cartText + item.getProduct().getName() + " " + item.getAmount() + "\n";
+            cartText = cartText + item.getProduct().getName() + " " + item.getAmount() + "    " + item.getTotal() + " kr" + "\n";
+            totaltText = totaltText + shoppingCart.getTotal() + " kr";
 
         }
-        orderTextArea.setText(cartText);
+        orderTextArea.setText(cartText + totaltText);
 
     }
 
