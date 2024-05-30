@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import se.chalmers.cse.dat216.project.*;
 
@@ -33,6 +34,8 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     @FXML
     AnchorPane smallShoppingCart;
 
+    @FXML
+    Circle amountCircle;
     @FXML
     Text shoppingCartAmount;
     @FXML
@@ -104,20 +107,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     @FXML
     Button favoriteCategoryButton;
 
-    @FXML
-    AnchorPane detailPane;
-
-    @FXML
-    Label detailLabel;
-
-    @FXML
-    Label originLabel;
-
-    @FXML
-    Label brandLabel;
-
-    @FXML
-    Label contentsLabel;
 
     @FXML
     Button profileButton;
@@ -148,13 +137,14 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     Label order2Date;
     @FXML
     Label order3Date;
-
-
-
-
-
-
-
+    @FXML
+    Button lastOrderButton;
+    @FXML
+    Button secondOrderButton;
+    @FXML
+    Button thirdOrderButton;
+    @FXML
+    Label phoneErrorLabel;
 
     IMatDataHandler iMatDataHandler = IMatDataHandler.getInstance();
 
@@ -166,9 +156,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private CreditCard creditCard;
 
-    private IMatProduct iMatProduct;
-
-
+    public ArrayList<String> categories = new ArrayList<String>(Arrays.asList("Baljväxter","Bröd", "Bär","Citrusfrukter","Varma drycker","Kalla drycker","Exotiska frukter","Fisk","Grönsaksfrukter","Sallad","Kött","Mejeri","Meloner","Basvaror","Nötter och frön","Pasta","Potatis och ris","Rotfrukter","Stenfrukter","Sötsaker","Örter"));
 
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -182,9 +170,17 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         updateProductList(model.getProducts());
         categoryList();
         this.customer = model.getCustomer();
-        this.iMatProduct = iMatProduct;
+        this.shoppingCart = model.getShoppingCart();
 
+        if(customer != null){
+            emailTextField.setText(customer.getEmail());
+            firstNameTextField.setText(customer.getFirstName());
+            lastNameTextField.setText(customer.getLastName());
+            adressTextField.setText(customer.getAddress());
+            postcodeTextField.setText(customer.getPostCode());
+            phoneNumberTextField.setText(customer.getPhoneNumber());
 
+        }
 
         // Load the NamePanel and add it to dynamicPane
         // This shows how one can develop a view in a separate
@@ -192,11 +188,10 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         // There is an fxml file NamePanel.fxml and a corresponding class NamePanel.java
         // Simply create a new NamePanel object and add it as a child of dynamicPane
         // The NamePanel holds a reference to the main controller (this class)
-        AnchorPane cartPane = new iMatCart(this,iMatProduct);
+        AnchorPane cartPane = new iMatCart(this);
         dynamicPane.getChildren().add(cartPane);
 
     }
-
 
 
     public void updateProductList(List<Product> products) {
@@ -208,7 +203,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         productsFlowPane.getChildren().clear();
 
         for (Product product : products) {
-
             productsFlowPane.getChildren().add(new IMatProduct(product));
         }
     }
@@ -217,7 +211,11 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     @FXML
     private void startShoppingButton(ActionEvent event){
         updateAccount();
-        loginPane.toBack();
+        if(phoneNumberTextField.getText().length() == 10 || phoneNumberTextField.getText().length() == 0 ){
+            loginPane.toBack();
+        }else{
+            phoneErrorLabel.setText("Felaktig inmatning");
+        }
     }
 
     @FXML
@@ -238,15 +236,32 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         updateProductList(matches);
         System.out.println("# matching products: " + matches.size());
     }
+    @FXML
+    private void handleSearchActionIcon(MouseEvent event) {
+        /*  Denna funktion är till för när du söker på en produkt. Den kommer hitta matchande produkt(er)
+        och uppdatera vilka produkter som visas i productsFlowPane.
+        */
+        List<Product> matches = Model.findProducts(searchTextField.getText());
+        updateProductList(matches);
+        System.out.println("# matching products: " + matches.size());
+    }
 
 
 //---------------------------------- Översta rektangeln andra funktioner ----------------------------------
 
     @FXML
+    public void startProductList(){
+        updateProductList(model.getProducts());
+    }
+    @FXML
     public void escapeHatchButton(MouseEvent event){
         updateProductList(model.getProducts());
         dynamicPane.toBack();
+        orderHistoryPane.toBack();
+        loginPane.toBack();
+        profilePane.toBack();
         startingPane.toFront();
+
     }
 
     @FXML
@@ -258,7 +273,7 @@ public class MainViewController implements Initializable, ShoppingCartListener {
     private void showProfileInformation(ActionEvent event){
         loginPane.toFront();
         profileLabel.setText("Användarinformation");
-        startShoppingButton.setText("Spara");
+        startShoppingButton.setText("Tillbaka");
     }
 //--------------------------------------OrderVy----------------------------------------------------------------------
     @FXML
@@ -267,54 +282,36 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         orderHistory();
     }
 
-    /*
+    List<ShoppingItem> LastOrders = new ArrayList<>();
+    List<ShoppingItem> SecondOrders = new ArrayList<>();
+    List<ShoppingItem> ThirdOrders = new ArrayList<>();
+
     private void orderHistory(){
-        ArrayList<Integer> ordernumbers = new ArrayList<>();
-        for(Order item : model.getOrders()){
-            ordernumbers.add(item.getOrderNumber());
-            System.out.println(ordernumbers);
-            String name = "";
-            if(ordernumbers.getLast() == item.getOrderNumber()){
-                for(ShoppingItem item1 : item.getItems()){
-                    name = name + item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
-                }
-                order1.setText(name);
-            }
-            if(ordernumbers.size() > 1){
-                if(ordernumbers.get(ordernumbers.size() - 2) == item.getOrderNumber()){
-                    for(ShoppingItem item1 : item.getItems()){
-                        name = name + item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
-                    }
-                    order2.setText(name);
-                }
-            }
-            if(ordernumbers.size() > 2){
-                if(ordernumbers.get(ordernumbers.size() - 3) == item.getOrderNumber()){
-                    for(ShoppingItem item1 : item.getItems()){
-                        name = name + item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
-                    }
-                    order3.setText(name);
-                }
-            }
-        }
-    }
-     */
-    private void orderHistory(){
+        LastOrders.clear();
+        SecondOrders.clear();
+        ThirdOrders.clear();
+
         List<Integer> ordernumbers = new ArrayList<>();
         for(Order item : model.getOrders()){
             ordernumbers.add(item.getOrderNumber());
         }
         int size = ordernumbers.size();
         for (int i = size - 1; i >= Math.max(0, size - 3); i--) {  //Går igenom de tre senaste elementen i listan bakifrån
-            int orderNumber = ordernumbers.get(i);
             String name = "";
             String date = "";
 
             for (Order item : model.getOrders()) {
-                if (item.getOrderNumber() == orderNumber) {
+                if (item.getOrderNumber() == ordernumbers.get(i)){
                     date =  date + item.getDate();
                     for (ShoppingItem item1 : item.getItems()) {
-                        name += item1.getProduct().getName() + "   " + item1.getTotal() + "\n";
+                        name += item1.getProduct().getName() + "   " + (int)item1.getAmount() + "st  " + item1.getTotal() + "\n";
+                        if(i == size - 1){
+                            LastOrders.add(item1);
+                        } else if (i == size - 2) {
+                            SecondOrders.add(item1);
+                        } else if (i == size - 3) {
+                            ThirdOrders.add(item1);
+                        }
                     }
 
                     if (i == size - 1) {  //Senaste ordern till första textarean
@@ -332,19 +329,34 @@ public class MainViewController implements Initializable, ShoppingCartListener {
                 }
             }
         }
-    }
 
-//----------------------------------Detaljvy av produkt ----------------------------------------------------------------
+
+    }
 
     @FXML
-    private void showDetailView(ActionEvent event){
-       // detailpane.tofront();
-        ProductDetail detail = iMatProduct.getDetail();
-        detailLabel.setText(detail.getDescription());
-        originLabel.setText(detail.getOrigin());
-        brandLabel.setText(detail.getBrand());
-        contentsLabel.setText(detail.getContents());
+    private void buyOrderAgain(MouseEvent event){
+        if(lastOrderButton.isPressed()){
+            for(ShoppingItem item : LastOrders){
+                shoppingCart.addItem(item);
+            }
+        } else if (secondOrderButton.isPressed()) {
+            for(ShoppingItem item : SecondOrders){
+                shoppingCart.addItem(item);
+            }
+        } else if (thirdOrderButton.isPressed()){
+            for(ShoppingItem item : ThirdOrders)
+                shoppingCart.addItem(item);
+        }
+
+        orderHistoryPane.toBack();
+        loginPane.toBack();
+        dynamicPane.toFront();
+
     }
+
+
+
+
 
 
 //----------------------------------shopping cart funktioner -------------------------------------------------
@@ -364,13 +376,13 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         for (int i=0;i<shoppingCart.getItems().size(); i++){
             cartAmountTemp += (int) shoppingCart.getItems().get(i).getAmount();
         }
-        shoppingCartAmount.setText("" + cartAmountTemp);
-
-        //shoppingCartAmount.setText("" + shoppingCart.getItems().size());
-
-       // itemAmountLabel.setText("Antal varor: " + shoppingCart.getItems().size());
-       // totalCostLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
-
+        if(cartAmountTemp < 1){
+            amountCircle.setOpacity(0);
+            shoppingCartAmount.setText("");
+        }else {
+            amountCircle.setOpacity(1);
+            shoppingCartAmount.setText("" + cartAmountTemp);
+        }
     }
 
     @FXML
@@ -383,7 +395,6 @@ public class MainViewController implements Initializable, ShoppingCartListener {
         dynamicPane.toBack();
         startingPane.toFront();
     }
-
 
     //---------------------------Logga in ---------------------------------------------------------------------
 
@@ -401,16 +412,30 @@ public class MainViewController implements Initializable, ShoppingCartListener {
 
     private void categoryList(){
         categoryFlowPane.getChildren().clear();
-        for (ProductCategory category : ProductCategory.values()){
-            categoryFlowPane.getChildren().add(new iMatCategories(category, this));
+        for(ProductCategory category : ProductCategory.values()){
+            categoryFlowPane.getChildren().add(new iMatCategories(category,this));
         }
     }
 
     @FXML
     private void categoryFavoriteButton(ActionEvent event){
         updateProductList(model.getFavorites());
-        // iMatProduct.setFavoriteLogo();
+
     }
+    @FXML
+    private void categoryFavoriteButtonMouse(MouseEvent event){
+        updateProductList(model.getFavorites());
+    }
+    @FXML
+    private void categoryUnderline(MouseEvent event){
+        categoryLabel.setUnderline(true);
+    }
+
+    @FXML
+    private void categoryUnderlineExit(MouseEvent event){
+        categoryLabel.setUnderline(false);
+    }
+
 
 
 }

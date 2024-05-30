@@ -22,57 +22,60 @@
          <children>
             <AnchorPane prefHeight="105.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <ImageView fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
+                  <ImageView fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" styleClass="escapeHatch" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
                      <image>
                         <Image url="@resources/img.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="395.0" layoutY="28.0" text="Orderhistorik">
+                  <Label layoutX="397.0" layoutY="36.0" styleClass="text-sample-headline" text="Orderhistorik">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <TextArea fx:id="order1" layoutX="96.0" layoutY="149.0" prefHeight="411.0" prefWidth="203.0">
+            <TextArea fx:id="order1" editable="false" layoutX="96.0" layoutY="149.0" prefHeight="382.0" prefWidth="194.0" styleClass="text-sample-no">
                <font>
                   <Font size="18.0" />
                </font>
             </TextArea>
-            <TextArea fx:id="order2" layoutX="398.0" layoutY="149.0" prefHeight="411.0" prefWidth="203.0">
+            <TextArea fx:id="order2" editable="false" layoutX="398.0" layoutY="149.0" prefHeight="382.0" prefWidth="194.0" styleClass="text-sample-no">
                <font>
                   <Font size="18.0" />
                </font>
             </TextArea>
-            <TextArea fx:id="order3" layoutX="710.0" layoutY="149.0" prefHeight="411.0" prefWidth="203.0">
+            <TextArea fx:id="order3" editable="false" layoutX="710.0" layoutY="149.0" prefHeight="382.0" prefWidth="194.0" styleClass="text-sample-no">
                <font>
                   <Font size="18.0" />
                </font>
             </TextArea>
             <AnchorPane layoutY="600.0" prefHeight="110.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <Button fx:id="backButton1" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#profileButton" prefHeight="68.0" prefWidth="179.0" text="TIllbaka" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="411.5999999999999">
+                  <Button fx:id="backButton1" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#profileButton" prefHeight="68.0" prefWidth="179.0" styleClass="text-sample" text="Tillbaka" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="411.5999999999999">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-            <Label fx:id="order1Date" layoutX="111.0" layoutY="131.0" prefHeight="18.0" prefWidth="173.0" />
-            <Label fx:id="order2Date" layoutX="413.0" layoutY="131.0" prefHeight="18.0" prefWidth="174.0" />
-            <Label fx:id="order3Date" layoutX="724.0" layoutY="131.0" prefHeight="18.0" prefWidth="174.0" />
+            <Label fx:id="order1Date" layoutX="111.0" layoutY="131.0" prefHeight="18.0" prefWidth="173.0" styleClass="text-sample-small" />
+            <Label fx:id="order2Date" layoutX="413.0" layoutY="131.0" prefHeight="18.0" prefWidth="174.0" styleClass="text-sample-small" />
+            <Label fx:id="order3Date" layoutX="724.0" layoutY="131.0" prefHeight="18.0" prefWidth="174.0" styleClass="text-sample-small" />
+            <Button id="buyButton" fx:id="lastOrderButton" layoutX="137.0" layoutY="537.0" mnemonicParsing="false" onMousePressed="#buyOrderAgain" styleClass="text-sample" text="Handla igen" textFill="WHITE" />
+            <Button id="buyButton" fx:id="secondOrderButton" layoutX="444.0" layoutY="537.0" mnemonicParsing="false" onMousePressed="#buyOrderAgain" styleClass="text-sample" text="Handla igen" textFill="WHITE" />
+            <Button id="buyButton" fx:id="thirdOrderButton" layoutX="755.0" layoutY="537.0" mnemonicParsing="false" onMousePressed="#buyOrderAgain" styleClass="text-sample" text="Handla igen" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="profilePane" prefHeight="710.0" prefWidth="1000.0" style="-fx-background-color: #ECECEC;">
          <children>
             <AnchorPane prefHeight="105.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <ImageView fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
+                  <ImageView id="escapeHatch" fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
                      <image>
                         <Image url="@resources/img.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="458.0" layoutY="28.0" text="Profil">
+                  <Label layoutX="454.0" layoutY="34.0" styleClass="text-sample-headline" stylesheets="@imat_app.css" text="Profil">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -81,17 +84,17 @@
             </AnchorPane>
             <Button id="orderButton" fx:id="showProfile" layoutX="125.0" layoutY="187.5" mnemonicParsing="false" onAction="#showProfileInformation" prefHeight="334.0" prefWidth="338.0" text="ANVÄNDARINFORMATION" textFill="WHITE">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Arial" size="24.0" />
                </font>
             </Button>
             <Button id="orderButton" fx:id="showOrderHistory" layoutX="535.0" layoutY="187.5" mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="334.0" prefWidth="338.0" text="ORDERHISTORIK" textFill="WHITE">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Arial" size="24.0" />
                </font>
             </Button>
             <AnchorPane layoutY="600.0" prefHeight="110.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <Button fx:id="backButton" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButton" prefHeight="68.0" prefWidth="179.0" text="TIllbaka" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="411.5999999999999">
+                  <Button fx:id="backButton" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButton" prefHeight="68.0" prefWidth="179.0" styleClass="text-sample" text="Tillbaka" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="411.5999999999999">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -108,29 +111,29 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="242.0">
                      <children>
-                        <ScrollPane hbarPolicy="NEVER" layoutY="62.4" prefHeight="538.0" prefWidth="210.0" styleClass="no-scroll" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
+                        <ScrollPane hbarPolicy="NEVER" layoutY="70.4" prefHeight="530.0" prefWidth="210.0" styleClass="no-scroll" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <content>
                               <FlowPane fx:id="categoryFlowPane" prefHeight="602.0" prefWidth="211.0" styleClass="no-scroll" />
                            </content>
                         </ScrollPane>
                         <AnchorPane layoutX="-3.0" prefHeight="62.0" prefWidth="217.0">
                            <children>
-                              <Button fx:id="favoriteCategoryButton" layoutX="4.0" layoutY="-1.0" mnemonicParsing="false" onAction="#categoryFavoriteButton" prefHeight="62.0" prefWidth="210.0" />
-                              <Label fx:id="categoryLabel" layoutX="14.0" layoutY="17.0" text="Favoriter">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="28.0" fitWidth="36.0" layoutX="110.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                              <Button fx:id="favoriteCategoryButton" layoutX="3.0" layoutY="7.0" mnemonicParsing="false" onAction="#categoryFavoriteButton" prefHeight="62.0" prefWidth="210.0" />
+                              <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="95.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../../../Downloads/favorite_24dp_FILL1_wght400_GRAD0_opsz24%20(2).png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="172.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="38.0" fitWidth="34.0" layoutX="179.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../../../Downloads/chevron_right_24dp_FILL0_wght400_GRAD0_opsz48.png" />
                                  </image>
                               </ImageView>
+                              <Label fx:id="categoryLabel" layoutX="14.0" layoutY="28.0" onMouseClicked="#categoryFavoriteButtonMouse" onMouseEntered="#categoryUnderline" onMouseExited="#categoryUnderlineExit" styleClass="text-sample-category" text="Favoriter">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>
@@ -148,14 +151,22 @@
             </SplitPane>
          </children>
       </StackPane>
-      <AnchorPane prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
+      <AnchorPane prefHeight="98.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <ImageView id="bigButton" fx:id="escapeHatchLogo" fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
+            <ImageView fx:id="escapeHatchLogo" fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" styleClass="escapeHatch" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
                <image>
                   <Image url="@resources/img.png" />
                </image>
             </ImageView>
-            <TextField fx:id="searchTextField" layoutX="278.0" layoutY="38.0" onAction="#handleSearchAction" prefHeight="37.0" prefWidth="444.0" promptText="Sök varor här!" />
+            <TextField fx:id="searchTextField" layoutX="278.0" layoutY="38.0" onAction="#handleSearchAction" prefHeight="37.0" prefWidth="444.0" promptText="Sök varor här!">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font></TextField>
+            <ImageView fitHeight="28.0" fitWidth="34.0" layoutX="686.0" layoutY="43.0" onMouseClicked="#handleSearchActionIcon" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Downloads/search_24dp_FILL0_wght400_GRAD0_opsz24.png" />
+               </image>
+            </ImageView>
             <Button id="bigButton" fx:id="shoppingCartButton" layoutX="902.0" layoutY="17.0" mnemonicParsing="false" onAction="#goToCartButton">
                <graphic>
                   <ImageView fitHeight="67.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
@@ -165,8 +176,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Circle fill="#16a3cf" layoutX="985.0" layoutY="17.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text fx:id="shoppingCartAmount" layoutX="981.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+            <Circle fx:id="amountCircle" fill="#16a3cf" layoutX="985.0" layoutY="17.0" opacity="0.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Text fx:id="shoppingCartAmount" layoutX="981.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -185,12 +196,12 @@
          <children>
             <AnchorPane prefHeight="105.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" AnchorPane.rightAnchor="0.0">
                <children>
-                  <ImageView fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
+                  <ImageView fitHeight="106.0" fitWidth="137.0" layoutX="30.0" layoutY="9.0" onMouseClicked="#escapeHatchButton" pickOnBounds="true" preserveRatio="true" styleClass="escapeHatch" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.0">
                      <image>
                         <Image url="@resources/img.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="profileLabel" alignment="CENTER" layoutX="268.0" layoutY="28.0" prefHeight="54.0" prefWidth="464.0" text="Välkommen!" textAlignment="CENTER">
+                  <Label fx:id="profileLabel" alignment="CENTER" layoutX="268.0" layoutY="28.0" prefHeight="54.0" prefWidth="464.0" styleClass="text-sample-headline" text="Välkommen!" textAlignment="CENTER">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -199,7 +210,7 @@
             </AnchorPane>
             <AnchorPane layoutY="600.0" prefHeight="110.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <Button fx:id="startShoppingButton" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#startShoppingButton" prefHeight="68.0" prefWidth="179.0" stylesheets="@imat_app.css" text="Börja shoppa!" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="411.5999999999999">
+                  <Button fx:id="startShoppingButton" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#startShoppingButton" prefHeight="68.0" prefWidth="179.0" styleClass="text-sample" stylesheets="@imat_app.css" text="Börja shoppa!" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="411.5999999999999">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -208,42 +219,43 @@
             </AnchorPane>
             <Pane layoutX="140.0" layoutY="146.0" prefHeight="417.0" prefWidth="719.0" style="-fx-background-color: #16A3CF;" styleClass="product-item">
                <children>
-                  <Label layoutX="59.0" layoutY="110.0" text="Efternamn:" textFill="WHITE">
+                  <Label layoutX="123.0" layoutY="111.0" styleClass="text-sample-big-no" text="Efternamn:" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="60.0" layoutY="63.0" text="Förnamn:" textFill="WHITE">
+                  <Label layoutX="137.0" layoutY="68.0" styleClass="text-sample-big-no" text="Förnamn:" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="59.0" layoutY="153.0" text="Emailadress:" textFill="WHITE">
+                  <Label layoutX="101.0" layoutY="158.0" styleClass="text-sample-big-no" text="Emailadress:" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="lastNameTextField" layoutX="254.0" layoutY="109.0" prefHeight="38.0" prefWidth="310.0" promptText="Lönnvald" />
-                  <TextField fx:id="firstNameTextField" layoutX="254.0" layoutY="62.0" prefHeight="38.0" prefWidth="310.0" promptText="Oskar" />
-                  <TextField fx:id="emailTextField" layoutX="254.0" layoutY="152.0" prefHeight="38.0" prefWidth="310.0" promptText="namn@mail.se" />
-                  <Label layoutX="59.0" layoutY="287.0" text="Telefonnummer:" textFill="WHITE">
+                  <TextField fx:id="lastNameTextField" layoutX="253.0" layoutY="109.0" prefHeight="38.0" prefWidth="310.0" promptText="Ex. Lönnvald" styleClass="text-sample-no" />
+                  <TextField fx:id="firstNameTextField" layoutX="254.0" layoutY="62.0" prefHeight="38.0" prefWidth="310.0" promptText="Ex. Oskar" styleClass="text-sample-no" stylesheets="@imat_app.css" />
+                  <TextField fx:id="emailTextField" layoutX="254.0" layoutY="152.0" prefHeight="38.0" prefWidth="310.0" promptText="Ex. oskar@gmail.se" styleClass="text-sample-no" />
+                  <Label layoutX="67.0" layoutY="292.0" styleClass="text-sample-big-no" text="Telefonnummer:" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="phoneNumberTextField" layoutX="254.0" layoutY="286.0" prefHeight="38.0" prefWidth="310.0" promptText="07343234243" />
-                  <TextField fx:id="adressTextField" layoutX="254.0" layoutY="197.0" prefHeight="38.0" prefWidth="310.0" promptText="Chalmers 123" />
-                  <Label layoutX="59.0" layoutY="198.0" text="Adress:" textFill="WHITE">
+                  <TextField fx:id="phoneNumberTextField" layoutX="254.0" layoutY="286.0" prefHeight="38.0" prefWidth="310.0" promptText="Ex. 07343234243" styleClass="text-sample-no" />
+                  <TextField fx:id="adressTextField" layoutX="254.0" layoutY="197.0" prefHeight="38.0" prefWidth="310.0" promptText="Ex. Chalmers 123" styleClass="text-sample-no" />
+                  <Label layoutX="161.0" layoutY="199.0" styleClass="text-sample-big-no" text="Adress:" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="59.0" layoutY="243.0" text="Postcode:" textFill="WHITE">
+                  <Label layoutX="137.0" layoutY="248.0" styleClass="text-sample-big-no" text="Postcode:" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="postcodeTextField" layoutX="254.0" layoutY="242.0" prefHeight="38.0" prefWidth="310.0" promptText="412 80" />
+                  <TextField fx:id="postcodeTextField" layoutX="254.0" layoutY="242.0" prefHeight="38.0" prefWidth="310.0" promptText="Ex. 412 80" styleClass="text-sample-no" />
+                  <Label fx:id="phoneErrorLabel" layoutX="584.0" layoutY="297.0" styleClass="text-sample-small" />
                </children>
             </Pane>
          </children>

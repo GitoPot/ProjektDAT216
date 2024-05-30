@@ -26,7 +26,7 @@ public class iMatShoppingCart extends AnchorPane {
     @FXML
     private Label shoppingCartNameLabel;
     @FXML
-    Label productDetailLabel;
+    Label contentsLabel;
 
     @FXML
     TextField detailTextField;
@@ -64,7 +64,7 @@ public class iMatShoppingCart extends AnchorPane {
 
         ProductDetail productdetail = model.getDetail(product);
         if (productdetail != null) {
-            productDetailLabel.setText("" + productdetail.getDescription());
+           contentsLabel.setText("" + productdetail.getContents());
         }
 
     }
@@ -82,16 +82,8 @@ public class iMatShoppingCart extends AnchorPane {
     }
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event){
-        if(amount == 1){
-            model.removeFromShoppingCart(product);
-        }
-        else{
-            textFieldCartAmount.setText("" + (amount -= 1));
-            model.removeFromShoppingCart(product);
-            for(int i = amount-1; i>-1; i--){
-                model.addToShoppingCart(product);
-            }
-        }
+        model.removeFromShoppingCartAgain(product);
+        textFieldCartAmount.setText(""+(amount));
     }
 
     //------------------------------------------------------------------------------------------------------

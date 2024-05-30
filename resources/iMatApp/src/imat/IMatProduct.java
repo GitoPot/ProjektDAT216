@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import se.chalmers.cse.dat216.project.Product;
@@ -47,7 +48,20 @@ public class IMatProduct extends AnchorPane {
     private Button favoriteButton;
     @FXML
     private Button filledFavoriteButton;
+    @FXML
+    AnchorPane detailPane;
 
+    @FXML
+    Label detailLabel;
+
+    @FXML
+    Label originLabel;
+
+    @FXML
+    Label brandLabel;
+
+    @FXML
+    Label productDetailNameLabel;
 
     private Model model = Model.getInstance();
 
@@ -81,19 +95,11 @@ public class IMatProduct extends AnchorPane {
         productNameLabel1.setText(product.getName());
         productPriceLabel1.setText(String.format("%.2f", product.getPrice()) + " " + product.getUnit());
 
-
-        /*
-        ProductDetail detail = model.getDetail(product);
-        if (detail != null) {
-            originLabel.setText(detail.getOrigin());
-        }
-        */
-
     }
 
 
     @FXML
-    public void changePane(){
+    public void changePane() {
         changeAmountPane.toBack();
     }
 
@@ -101,30 +107,38 @@ public class IMatProduct extends AnchorPane {
     //------------------------------favorit-knappar------------------------------------------------------------
 
     @FXML
-    public void setFavoriteLogo(){
+    public void setFavoriteLogo() {
         filledFavoriteButton.toFront();
     }
+
     @FXML
-    private void favoriteButton(ActionEvent event){
+    private void favoriteButton(ActionEvent event) {
         model.addToFavorite(product);
         favoriteButton.toBack();
         filledFavoriteButton.toFront();
     }
 
     @FXML
-    private void undoFavoriteButton(ActionEvent event){
+    private void undoFavoriteButton(ActionEvent event) {
         model.removeFromFavorite(product);
         favoriteButton.toFront();
         filledFavoriteButton.toBack();
-
     }
 
-
-
-    public ProductDetail getDetail() {
-        return model.getDetail(product);
+    @FXML
+    private void goBackToProduct(ActionEvent event){
+        detailPane.toBack();
     }
 
+    @FXML
+    private void showDetailView(MouseEvent event){
+        detailPane.toFront();
+        ProductDetail detail = model.getDetail(product);
+        productDetailNameLabel.setText(product.getName());
+        detailLabel.setText(detail.getDescription());
+        originLabel.setText("Från: " + detail.getOrigin());
+        brandLabel.setText("Märke: " +  detail.getBrand());
+    }
 
 
     //------------------- BORDE INTE DESSA VARA I ANTINGEN MAINVEIWCONTROLLER ELLER IMATCART?-------------------
@@ -141,73 +155,21 @@ public class IMatProduct extends AnchorPane {
     private void addToShoppingCartAgain(ActionEvent event) {
         model.addToShoppingCartAgain(product);
         changeAmountPane.toFront();
-
         cardAmountTextField.setText("" + (amount += 1));
     }
 
 
-
-
     @FXML
     private void removeFromShoppingCartAgain(ActionEvent event) {
-        if(amount == 1){
+        if (amount == 1) {
             model.removeFromShoppingCart(product);
             changeAmountPane.toBack();
-        }
-        else{
+        } else {
             cardAmountTextField.setText("" + (amount -= 1));
             model.removeFromShoppingCart(product);
-            for(int i = amount-1; i>-1; i--){
+            for (int i = amount - 1; i > -1; i--) {
                 model.addToShoppingCart(product);
             }
         }
-        /*
-        if(amount == 1){
-            changeAmountPane.toBack();
-        }
-        else{
-            cardAmountTextField.setText("" + (amount -= 1));
-        }
-
-        */
-
-
-
-        /*
-       // if (amount != 0 && !model.getProducts().isEmpty()) {
-            //System.out.println("produkten har mer än 1 i amount och listan är inte tom");
-            double index = 0;
-            for (int i = 0; i < model.getProducts().size(); i++) {
-                if (model.getProducts().get(i).equals(product)) {
-                    index = (double) i;
-                    System.out.println("dom är lika!");
-                    break;
-                } else {
-                    System.out.println("dom är inte lika:(");
-                    index = -1;
-                }
-            }
-
-        if (amount == 1) {
-            System.out.println("jag är här");
-            changeAmountPane.toBack();
-            index = index-1;
-        } else {
-            cardAmountTextField.setText("" + (amount -= 1));
-        }
-        model.removeFromShoppingCartAgain(index);
-        */
-        /*
-        if(amount != 0) {
-            model.removeFromShoppingCartAgain(product);
-            changeAmountPane.toFront();
-            cardAmountTextField.setText("" + (amount -= 1));
-        }
-        else{
-            changeAmountPane.toBack();*/
-            //}
-
-            //---------------------------------------------------------------------------------
-
-        }
     }
+}

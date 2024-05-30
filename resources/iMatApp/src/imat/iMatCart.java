@@ -64,7 +64,7 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
     private final Model model = Model.getInstance();
     private ShoppingCart shoppingCart = model.getShoppingCart();
-    public iMatCart(MainViewController mainViewController, IMatProduct product){
+    public iMatCart(MainViewController mainViewController){
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("imat_cart.fxml"));
         fxmlLoader.setRoot(this);
@@ -76,7 +76,6 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
             throw new RuntimeException(exception);
         }
         this.mainViewController = mainViewController;
-        this.product = product;
 
         shoppingCart.addShoppingCartListener(this);
         this.customer = model.getCustomer();
@@ -105,10 +104,12 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
     @FXML
     public void escapeHatch(MouseEvent event){
+        leveransPane.toBack();
         mainViewController.escapeHatchButton(event);
     }
     @FXML
     public void clearShoppingCart(ActionEvent event){
+        mainViewController.startProductList();
         model.clearShoppingCart();
     }
     @FXML
@@ -117,8 +118,6 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
     @FXML
     public void goBackToStart(ActionEvent event){
         mainViewController.closeCartButton();
-        product.changePane();
-
     }
 
     @FXML
@@ -126,7 +125,7 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
         orderDonePane.toBack();
         leveransPane.toBack();
         goBackToStart(event);
-        product.changePane();
+        mainViewController.startProductList();
     }
 
 
@@ -154,14 +153,13 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
 
 
     private void updateAccount(){
-        if (customer != null){
-        orderEmailTextField.setText(customer.getEmail());
-        orderFirstNameTextField.setText(customer.getFirstName());
-        orderLastNameTextField.setText(customer.getLastName());
-        orderAdressTextField.setText(customer.getAddress());
-        orderPostcodeTextField.setText(customer.getPostCode());
-        orderPhoneNumberTextField.setText(customer.getPhoneNumber());
-
+        if (customer != null) {
+            orderEmailTextField.setText(customer.getEmail());
+            orderFirstNameTextField.setText(customer.getFirstName());
+            orderLastNameTextField.setText(customer.getLastName());
+            orderAdressTextField.setText(customer.getAddress());
+            orderPostcodeTextField.setText(customer.getPostCode());
+            orderPhoneNumberTextField.setText(customer.getPhoneNumber());
         }
     }
     private void updateCreditCard() {
@@ -185,11 +183,11 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
         String cartText = "";
         String totaltText = "";
         for(ShoppingItem item: shoppingCart.getItems()){
-            cartText = cartText + item.getProduct().getName() + " " + item.getAmount() + "    " + item.getTotal() + " kr" + "\n";
-            totaltText = totaltText + shoppingCart.getTotal() + " kr";
+            cartText = cartText + item.getProduct().getName() + "   " + (int)item.getAmount() + "st     " + item.getTotal() + " kr" + "\n";
+            totaltText = shoppingCart.getTotal() + " kr";
 
         }
-        orderTextArea.setText(cartText + totaltText);
+        orderTextArea.setText(cartText + "\n" + "Total kostnad " + totaltText);
 
     }
 
@@ -221,32 +219,15 @@ public class iMatCart extends AnchorPane implements ShoppingCartListener {
     private void updateView() {
 
         //_----------------------DETTA ÄR COPY PASTE FRÅN MAIN VIEW CONTROLLER-----------
-         int cartAmountTemp = 0;
-                 for (int i=0;i<shoppingCart.getItems().size(); i++){
-                     cartAmountTemp += shoppingCart.getItems().get(i).getAmount();
-                 }
-         //------------------------------------------------------------------------------
-        
-         totalAmountLabel.setText("Antal varor: " + cartAmountTemp);  // VA FÖRUT totalAmountLabel.setText("Antal varor: " + shoppingCart.get...().size())
-         totalPriceLabel.setText("Kostnad: " + String.format("%.2f",shoppingCart.getTotal()));
-        //System.out.println("updateView");
+        int cartAmountTemp = 0;
+        for (int i = 0; i < shoppingCart.getItems().size(); i++) {
+            cartAmountTemp += (int)shoppingCart.getItems().get(i).getAmount();
+        }
+        //------------------------------------------------------------------------------
 
-
-        // String cartText = "";
-
-
-        //System.out.println("before " + cartText + shoppingCart.getItems().size());
-
-
-        // for (ShoppingItem item: shoppingCart.getItems()) {
-
-        //   cartFlowPane.getChildren().add(new iMatShoppingCart(item.getProduct()));
-
-        //  cartText = cartText + item.getProduct().getName() + " " + item.getAmount() + "\n";
-
-        //System.out.println("during " + cartText);
+        totalAmountLabel.setText(cartAmountTemp + " st");
+        totalPriceLabel.setText(String.format("%.2f", shoppingCart.getTotal()) + " kr");
     }
-        //cartTextArea.setText(cartText);
 }
 
 

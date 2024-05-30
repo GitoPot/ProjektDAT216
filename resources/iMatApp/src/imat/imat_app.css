@@ -3,6 +3,33 @@
       -fx-font-family: "Arial";
       -fx-font-weight: bold;
   }
+.text-sample-no{
+   -fx-font-size: 16px;
+   -fx-font-family: "Arial";
+}
+.text-sample-big{
+        -fx-font-size: 24px;
+        -fx-font-family: "Arial";
+        -fx-font-weight: bold;
+    }
+.text-sample-big-no{
+    -fx-font-size: 24px;
+    -fx-font-family: "Arial";
+}
+.text-sample-small{
+    -fx-font-size: 13px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+.text-sample-category{
+    -fx-font-size: 18px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+.text-sample-headline{
+    -fx-font-size: 36px;
+    -fx-font-family: "Arial";
+}
 
 .product-item{
     -fx-border-radius: 10px;
@@ -46,6 +73,21 @@
 #buyButton:hover{
    -fx-background-color: #3C7486;
     }
+
+.escapeHatch{
+}
+
+.escapeHatch:hover{
+    -fx-effect: dropshadow(gaussian,rgba(128, 128, 128, 0.1), 15, 0.7, 0.0, 0.0);
+
+}
+.foodImage{
+}
+
+.foodImage:hover{
+    -fx-effect: dropshadow(gaussian,rgba(128, 128, 128, 0.7), 15, 0.7, 0.0, 0.0);
+
+}
 
 #bigButton{
     -fx-background-color: #f3cf12;

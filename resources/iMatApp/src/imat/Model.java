@@ -101,72 +101,40 @@ public class Model {
     public void removeFromShoppingCart(Product p){
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
         ShoppingItem item = new ShoppingItem(p);
-        Model.getInstance().getShoppingCart().removeItem(item);
+        // Model.getInstance().getShoppingCart().removeItem(item);
+        shoppingCart.removeItem(item);
     }
 
 
     public void addToShoppingCart(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
         ShoppingItem item = new ShoppingItem(p);
-        Model.getInstance().getShoppingCart().addItem(item);
+        //Model.getInstance().getShoppingCart().addItem(item);
+        shoppingCart.addItem(item);
     }
 
     public void addToShoppingCartAgain(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
         ShoppingItem item = new ShoppingItem(p);
-        Model.getInstance().getShoppingCart().addItem(item,true);
+       // Model.getInstance().getShoppingCart().addItem(item,true);
+        shoppingCart.addItem(item,true);
     }
 
 
-
-    public void removeFromShoppingCartAgain(double index) {
-
+    public void removeFromShoppingCartAgain(Product p) {
         ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-        ShoppingItem item = shoppingCart.getItems().get((int)index);
-        if(item.getAmount() == 1){
-            System.out.println("shopping objektet tas bort helt");
-            shoppingCart.removeItem((int)index);
-        }
-        else{
-            System.out.println("amountet ändras");
-            item.setAmount(item.getAmount() -1);
-            System.out.println("" + item.getAmount());
-        }
-        shoppingCart.fireShoppingCartChanged(item,false);
-
-        //DENNA FUNKAR EJ
-
-        //det går inte att ändra amount på
-        /*
-        ShoppingCart shoppingCart = iMatDataHandler.getShoppingCart();
-        ShoppingItem item = null;
-        for (int i=0; i<shoppingCart.getItems().size(); i++ ){
-            if (shoppingCart.getItems().get(i).equals(p)){
-                item = shoppingCart.getItems().get(i);
+        List<ShoppingItem> items = shoppingCart.getItems();
+        for (ShoppingItem item : items) {
+            if (item.getProduct() == p) {
+                if (item.getAmount() - 1 > 0) {
+                    item.setAmount(item.getAmount() - 1);
+                } else {
+                    shoppingCart.removeItem(item);
+                }
+                shoppingCart.fireShoppingCartChanged(item, false);
             }
-            //else {
-            //    item  = null;
-            //}
         }
-        System.out.println("" + item.getAmount());
-        if (item.getAmount() == 1.0){
-            shoppingCart.removeItem(item);
-        }
-        else {
-            System.out.println("jag hamnade här");
-            item.setAmount(item.getAmount() -1 );
-        }*/
-        /*
-        ShoppingItem item= new ShoppingItem(p);
-        double amount = item.getAmount();
-        item.setAmount(amount - 1);*/
-        //System.out.println("" + iMatDataHandler.getShoppingCart().getItems());
-        //System.out.println("" + item.getAmount());
     }
-
-
-
-
 
 
     public ProductDetail getDetail(Product p) {
@@ -176,7 +144,6 @@ public class Model {
     public List<ProductCategory> getCategories(){
         List<ProductCategory> categoriesList = new ArrayList<>();
         categoriesList.addAll(Arrays.asList(ProductCategory.values()));
-        //System.out.println("" + categoriesList.get(0).getDeclaringClass().getSimpleName()); //denna print visar att objekten i listan faktiskt är av typen ProductCategory
         return categoriesList;
     }
 

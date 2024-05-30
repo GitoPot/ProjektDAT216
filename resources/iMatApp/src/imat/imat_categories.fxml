@@ -15,10 +15,11 @@
             <Image url="@../../../../../../Downloads/chevron_right_24dp_FILL0_wght400_GRAD0_opsz48.png" />
          </image>
       </ImageView>
-      <Label fx:id="categoryLabel" layoutX="14.0" layoutY="17.0" text="Kategori">
+      <Label fx:id="categoryLabel" layoutX="14.0" layoutY="20.0" onMouseClicked="#categoryLabelSearch" onMouseEntered="#categoryUnderline" onMouseExited="#categoryUnderlineExit" opacity="0.0" styleClass="text-sample-category" stylesheets="@imat_app.css" text="Kategori">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="categoryNameLabel" layoutX="14.0" layoutY="22.0" onMouseClicked="#categoryLabelSearch" onMouseEntered="#categoryUnderline" onMouseExited="#categoryUnderlineExit" prefHeight="22.0" prefWidth="165.0" styleClass="text-sample-category" stylesheets="@imat_app.css" text="Kategori1" />
    </children>
 </fx:root>
